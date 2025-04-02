@@ -1,0 +1,707 @@
+main {
+  min-height: 80vh;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+.rating svg {
+  color: #f8e825;
+}
+
+.book-rating-h2 {
+  border-radius: 8px;
+}
+.rating-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-left: 0.5rem;
+}
+
+.book-title {
+  height: 2.5em; /* Set a fixed height */
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+table td,
+table th {
+  text-align: center;
+}
+
+.review {
+  margin-top: 30px;
+}
+
+.review h2 {
+  font-size: 24px;
+  background: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.review button {
+  margin-top: 10px;
+}
+
+.carousel-caption {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 10;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.logo-hw {
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.carousel-letters {
+  margin-right: 65px;
+}
+.carousel-letters-container {
+  opacity: 0.7;
+  z-index: 4;
+}
+.available-books {
+  padding: 10px 10px 10px 20px;
+}
+.upper-div-book-div {
+  display: flex;
+  justify-content: center;
+}
+.upper-div-book {
+  margin-bottom: 25px;
+  max-width: 1140px;
+}
+.upper-div-book img {
+  box-shadow: 8px 2px 5px rgba(0, 0, 0, 0.3), 0px 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-bottom: 23px;
+}
+
+.image-book-book {
+  position: relative;
+  animation: moveFromLeft 1.2s ease-out; /* Adjust timing and easing as needed */
+}
+
+/* nav bar */
+.nav-header span {
+  font-size: 0.9rem;
+}
+
+@keyframes moveFromLeft {
+  from {
+    transform: translateX(-100%); /* Start off-screen to the left */
+  }
+  to {
+    transform: translateX(0); /* Move to its original position */
+  }
+}
+.poems-containers-div {
+  display: flex;
+  justify-content: center;
+}
+.poems-containers-div p {
+  font-size: 0.9rem;
+}
+#poems-containers {
+  max-width: 1140px;
+}
+.poemLink {
+  text-decoration: none;
+}
+#poemTitle {
+  font-size: 1.5rem;
+  padding: 12px 12px 12px 0px;
+}
+#poemAuthor {
+  font-size: 1rem;
+  padding: 12px 12px 12px 0px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Fully transparent at the start */
+  }
+  to {
+    opacity: 1; /* Fully visible at the end */
+  }
+}
+
+main {
+  position: relative;
+  /* background-image: url("../../assets/library-book-book-read.jpg"); */
+  background-size: cover;
+  margin: 0;
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+main > * {
+  position: relative;
+  z-index: 2;
+}
+
+.caroulsel-book-right-side {
+  position: relative;
+  /* background-image: url("../../assets/library-book-book-read.jpg"); */
+  /* background-size: cover; */
+  margin: 0;
+}
+
+.upper-div-poem {
+  background-image: url("../../assets/library-book-book-read.jpg");
+  background-size: cover;
+  border-radius: 8px;
+  box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.5), 0px 4px 15px rgba(0, 0, 0, 0.05);
+}
+#poem-content {
+  white-space: pre-wrap; /* Preserves line breaks and spaces */
+  text-align: center; /* Centers the text horizontally */
+  display: flex; /* Enables flexbox for better centering */
+  align-items: center; /* Centers the text vertically */
+  justify-content: center; /* Centers the text horizontally (flexbox) */
+  height: 100%;
+  word-wrap: break-word; /* Ensures long words break */
+  word-break: break-all; /* Forces breaking long words */
+  overflow-wrap: break-word; /* More reliable word breaking */
+  font-size: 1rem;
+}
+
+#poem-content {
+  position: relative;
+  opacity: 0; /* Start fully transparent */
+  animation: fadeIn 1.2s ease-out forwards; /* Wait for 1.2s and then become visible */
+}
+
+.poemTitle {
+  font-size: 2rem;
+  text-align: center;
+}
+.poemAuthor {
+  font-size: 1rem;
+  text-align: right;
+}
+.poemsPageH1,
+.booksPageH1 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 50px;
+}
+.poemContainer {
+  min-height: 250px;
+  display: flex; /* Enables flexbox for better centering */
+  align-items: center; /* Centers the text vertically */
+  justify-content: center; /* Centers the text horizontally (flexbox) */
+}
+.carousel {
+  margin-top: 52px;
+}
+.container-div-book-view {
+  background-color: none;
+}
+.main {
+  background-color: rgb(46, 33, 16);
+}
+
+.container {
+  max-width: 1960px;
+}
+.book-description {
+  white-space: pre-wrap;
+}
+.h1-recent-titles {
+  text-align: center;
+  margin: 85px 85px 85px 85px;
+}
+
+/*  bio */
+.div-image-biography {
+  text-align: center;
+  margin-right: 16px;
+}
+.image-biography {
+  width: 250px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 18px 12px 25px rgba(10, 10, 10, 0.5),
+    4px 14px 15px rgba(0, 0, 0, 0.05);
+}
+.image-biography {
+  position: relative;
+  animation: moveFromLeft 1s ease-out; /* Adjust timing and easing as needed */
+}
+
+@keyframes moveFromLeft {
+  from {
+    transform: translateX(-10%); /* Start off-screen to the left */
+  }
+  to {
+    transform: translateX(0); /* Move to its original position */
+  }
+}
+.bio-content,
+.upper-div-book p,
+.poemContainer {
+  position: relative;
+  opacity: 0; /* Start fully transparent */
+  animation: fadeIn 3s ease-out forwards; /* Wait for 1.2s and then become visible */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Fully transparent at the start */
+  }
+  to {
+    opacity: 1; /* Fully visible at the end */
+  }
+}
+.poemContent-poems-page {
+  max-height: 120px; /* Limite de altura */
+  overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse a altura */
+  display: -webkit-box; /* Necessário para usar o line-clamp */
+  -webkit-line-clamp: 3; /* Limita o número de linhas visíveis */
+  -webkit-box-orient: vertical; /* Orientação do texto */
+  word-break: break-word; /* Quebra palavras longas */
+  white-space: normal; /* Permite quebras de linha normais */
+}
+
+.poemContainer,
+.books-keyframe {
+  position: relative;
+  opacity: 0; /* Start fully transparent */
+  animation: fadeIn 3s ease-out forwards; /* Wait for 1.2s and then become visible */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Fully transparent at the start */
+  }
+  to {
+    opacity: 1; /* Fully visible at the end */
+  }
+}
+.books-keyframe:hover,
+.poemContainer:hover {
+  scale: 1.02;
+}
+.bio-container {
+  display: flex;
+  align-items: flex-start;
+}
+.bio-content {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  /* align-items: flex-start; */
+  max-width: 650px;
+  font-size: 1.1rem;
+
+  padding: 14px;
+}
+/* END SINGLE CATEGORY PAGE */
+/********** Large devices only **********/
+@media (min-width: 1200px) {
+}
+/********** Medium devices only **********/
+@media (min-width: 992px) and (max-width: 1199px) {
+  .image-biography {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+  }
+}
+/********** Small devices only **********/
+@media (min-width: 768px) and (max-width: 991px) {
+  .image-biography {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+  }
+}
+/********** Extra small devices only **********/
+@media (max-width: 767px) {
+  .div-image-biography {
+    width: 300px;
+    height: auto;
+  }
+
+  .bio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .div-container-bio h1 {
+    text-align: center;
+  }
+}
+/********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
+@media (max-width: 479px) {
+  .div-image-biography {
+    width: 85%;
+    height: auto;
+  }
+}
+
+p {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* Footer */
+.footer-harry {
+  background-color: black;
+  color: white;
+  width: 100%; /* Ensure it takes up the full width of the screen */
+  margin-bottom: 0; /* Remove the negative margin */
+  padding: 20px 0; /* Add padding for better spacing */
+}
+.footer-harry a {
+  color: white;
+}
+
+.poemsPageH1 {
+  margin-top: 15px;
+}
+.footer-top-container {
+  padding: 5px 5px 15px 15px;
+  font-size: 1.5rem;
+}
+/* upcoming  */
+
+.div-container-projects * {
+  /* text-decoration: none;; */
+  color: white;
+  border-radius: 8px;
+  padding-bottom: 15px;
+}
+.upcoming-container {
+  color: white;
+}
+.div-projects {
+  background-color: #71786f;
+  padding: 0px 0px 10px 0px;
+}
+#div-image-upcoming {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin: 5px auto; /* 'auto' para centralizar horizontalmente */
+  max-width: 250px;
+  padding: 0px 0px 0px 20px;
+  height: auto;
+  /* border: black 2px dashed; */
+}
+.div-text-container-upcoming {
+  padding: 0px 35px 35px 35px;
+}
+.upcoming-para {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.image-upcoming {
+  height: auto;
+  width: 250px;
+  padding: 0px 0px 0px 0px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 8px 2px 5px rgba(0, 0, 0, 0.3), 0px 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.image-upcoming:hover {
+  scale: 1.02;
+}
+
+.div-parag {
+  padding: 15px;
+}
+
+.project-container {
+  display: flex;
+  align-items: flex-start;
+}
+.h2-upcoming {
+  color: white;
+  padding: 10px;
+}
+.h4-upcoming {
+  font-size: 1.1rem;
+  margin-left: 15px;
+}
+
+.h3-upcoming {
+  font-size: 2rem;
+  margin-left: 15px;
+}
+
+.h1-upcoming {
+  text-align: center;
+  background-color: #131b11;
+  color: white;
+  padding: 15px;
+}
+.div-container-projects a {
+  padding: 15px;
+}
+/********** Extra small devices only **********/
+@media (max-width: 767px) {
+  .project-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+/* header */
+.nav-header {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.admin-menu-a,
+.perfil-link-a {
+  font-size: 0.8rem;
+}
+
+/* blog */
+.blogHomeScreenContainer,
+.bookHomeScreenContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.blogHomeScreen,
+.bookHomeScreen {
+  max-width: 1140px;
+}
+
+#blog-title {
+  font-size: 1.2rem;
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+.upper-div-blog {
+  margin-bottom: 25px;
+}
+.upper-div-blog img {
+  box-shadow: 8px 2px 5px rgba(0, 0, 0, 0.3), 0px 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-bottom: 23px;
+}
+
+.upper-div-blog p {
+  position: relative;
+  opacity: 0; /* Start fully transparent */
+  animation: fadeIn 3s ease-out forwards; /* Wait for 1.2s and then become visible */
+}
+
+.image-blog {
+  position: relative;
+  animation: moveFromLeft 1.2s ease-out; /* Adjust timing and easing as needed */
+}
+a {
+  text-decoration: none !important;
+}
+.blog-author {
+  font-size: 1.1rem;
+  align-self: flex-end;
+  text-align: right;
+  margin-top: auto;
+}
+.blog-createdAt {
+  font-size: 1rem;
+}
+
+.blog-title {
+  font-size: 2.1rem;
+}
+.blog-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-top: 24px;
+}
+.container-blog-details-div {
+  display: flex;
+  justify-content: center;
+}
+.container-blog-details {
+  border: #131b11 1px solid;
+  padding-top: 20px;
+  max-width: 1140px;
+}
+.container-blog-details h3 {
+  font-size: 1.6rem;
+}
+.container-blog-details p {
+  font-size: 1rem;
+}
+.blog-author-blog-genetal {
+  font-size: 1.2rem;
+  align-self: flex-end;
+  text-align: right;
+  margin-top: auto;
+}
+.blog-createdAt-blog-genetal {
+  align-self: flex-end;
+  text-align: right;
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+.blog-title-blog-genetal {
+  font-size: 2.1rem;
+}
+.blog-content-blog-genetal {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+/*  extra header/  footer */
+
+.icon-bio-footer {
+  padding: 5px 5px 5px 15px;
+}
+.icon-bio-header {
+  margin: 23px 15px;
+}
+.comment-form-container-div {
+  display: flex;
+  justify-content: center;
+}
+
+.comments-section-container {
+  display: flex;
+  justify-content: center;
+}
+.comments-section {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start; /* Ensures items start from the left */
+  align-items: flex-start; /* Aligns items to the top if needed */
+  padding: 20px;
+  width: 100%;
+  max-width: 1140px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.ml-button {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.comments-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.no-comments {
+  color: #777;
+  font-style: italic;
+}
+
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.comment-content {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.comment-textarea {
+  resize: vertical;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  height: 120px;
+  background-color: #fff;
+}
+
+.comment-submit-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.comment-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.login-prompt {
+  color: #777;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.gym-logo-aboutUs:hover {
+  scale: 1.01;
+}
+.homeScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers all child elements horizontally */
+}
+
+.photo-home-screen {
+  width: 100%;
+  border-radius: 5px;
+  height: 350px;
+  object-fit: cover;
+  margin: 0;
+
+  align-self: center; /* Centers this element inside .homeScreen */
+}
+
+.home-screen-training-inside-box {
+  min-height: 550px;
+}
+.upper-div-training {
+  width: 98%;
+}
