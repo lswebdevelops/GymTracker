@@ -97,23 +97,50 @@ const BookEditScreen = () => {
             <Form.Group controlId="name" className="my-2">
               <Form.Label>Treino</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Digite nome do treino (A, B, C, D, etc.)"
+                as="select"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
+              >
+                {[
+                  "A1",
+                  "A2",
+                  "A3",
+                  "A4",
+                  "A5",
+                  "B1",
+                  "B2",
+                  "B3",
+                  "B4",
+                  "B5",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4",
+                  "D5",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                ].map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="brand" className="my-2">
-              {/* editora > brand */}
-              <Form.Label>Coleção do Treino</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Nome da Coleção do Treino"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+           
 
             <Form.Group controlId="category" className="my-2">
               <Form.Label>Grupo Muscular</Form.Label>

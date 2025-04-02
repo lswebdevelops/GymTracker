@@ -71,7 +71,7 @@ const BookListScreen = () => {
               <tr>
                 <th>Código</th>
                 <th>Nome Treino</th>
-                <td>Coleção</td>
+                {/* <td>Coleção</td> */}
                 <th>Categoria</th>
 
                 <th></th>
@@ -82,7 +82,7 @@ const BookListScreen = () => {
                 <tr key={book._id}>
                   <td>{book._id}</td>
                   <td>{book.name}</td>
-                  <td>{book.brand}</td>
+                  {/* <td>{book.brand}</td> */}
                   <td>{book.category}</td>
 
                   <td>

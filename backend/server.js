@@ -6,7 +6,6 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
 import biographyRoutes from './routes/biographyRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 
@@ -29,7 +28,6 @@ app.use(cookieParser());
 
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/upload", uploadRoutes);
 app.use("/api/biography", biographyRoutes);
 app.use("/api/blogs", blogRoutes);
 

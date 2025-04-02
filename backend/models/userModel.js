@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    lastCompletedWorkout: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,
