@@ -1,8 +1,8 @@
 import { Row, Col, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useGetBooksQuery } from "../slices/booksApiSlice";
+import { useGetTrainingTypesQuery } from "../slices/trainingTypesApiSlice";
 import { Link } from "react-router-dom";
-import Book from "../components/Book";
+import TrainingType from "../components/TrainingType";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
@@ -11,13 +11,13 @@ import homePhoto from "../assets/gymPhoto.png"
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error } = useGetBooksQuery({
+  const { data, isLoading, error } = useGetTrainingTypesQuery({
     keyword,
     pageNumber,
   });
 
   return (
-    <div className="bookHomeScreenContainer ">
+    <div className="trainingTypeHomeScreenContainer ">
       <div className="homeScreen">
         {!keyword ? (
           // for showing the carousel "comment out || uncomment"
@@ -39,9 +39,9 @@ const HomeScreen = () => {
           <>
             <h1 className="h1-recent-titles">Exercício do Dia</h1>
             <Row>
-              {data.books.map((book) => (
-                <Col key={book._id} sm={12} md={6} lg={4} xl={3}>
-                  <Book book={book} />
+              {data.trainingTypes.map((trainingType) => (
+                <Col key={trainingType._id} sm={12} md={6} lg={4} xl={3}>
+                  <TrainingType trainingType={trainingType} />
                 </Col>
               ))}
             </Row>

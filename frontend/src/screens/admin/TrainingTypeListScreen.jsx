@@ -6,25 +6,25 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import Paginate from "../../components/Paginate";
 import {
-  useGetBooksQuery,
-  useCreateBookMutation,
-  useDeleteBookMutation,
-} from "../../slices/booksApiSlice";
+  useGetTrainingTypesQuery,
+  useCreateTrainingTypeMutation,
+  useDeleteTrainingTypeMutation,
+} from "../../slices/trainingTypesApiSlice";
 import { toast } from "react-toastify";
 
-const BookListScreen = () => {
+const TrainingTypeListScreen = () => {
   const { pageNumber } = useParams();
-  const { data, isLoading, error, refetch } = useGetBooksQuery({ pageNumber });
+  const { data, isLoading, error, refetch } = useGetTrainingTypesQuery({ pageNumber });
 
-  const [createBook, { isLoading: loadingCreate }] = useCreateBookMutation();
+  const [createTrainingType, { isLoading: loadingCreate }] = useCreateTrainingTypeMutation();
 
-  const [deleteBook, { isLoading: loadingDelete }] = useDeleteBookMutation();
+  const [deleteTrainingType, { isLoading: loadingDelete }] = useDeleteTrainingTypeMutation();
 
   const deleteHandler = async (id) => {
     if (window.confirm("Are you sure?")) {
       try {
-        await deleteBook(id);
-        toast.success("Book deleted");
+        await deleteTrainingType(id);
+        toast.success("Training Type deleted");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -32,12 +32,12 @@ const BookListScreen = () => {
     }
   };
 
-  const createBookHandler = async () => {
+  const createTrainingTypeHandler = async () => {
     if (!window.confirm("Tem certeza de que deseja criar um novo livro?")) {
       return;
     }
     try {
-      await createBook();
+      await createTrainingType();
       refetch();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -51,7 +51,7 @@ const BookListScreen = () => {
           <h1>Treinos</h1>
         </Col>
         <Col className="text-end">
-          <Button onClick={createBookHandler} className="btn-sm m-3">
+          <Button onClick={createTrainingTypeHandler} className="btn-sm m-3">
             <FaEdit />
             &nbsp; Criar Treino
           </Button>
@@ -78,15 +78,15 @@ const BookListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.books.map((book) => (
-                <tr key={book._id}>
-                  <td>{book._id}</td>
-                  <td>{book.name}</td>
-                  {/* <td>{book.brand}</td> */}
-                  <td>{book.category}</td>
+              {data.trainingTypes.map((trainingType) => (
+                <tr key={trainingType._id}>
+                  <td>{trainingType._id}</td>
+                  <td>{trainingType.name}</td>
+                  {/* <td>{trainingType.brand}</td> */}
+                  <td>{trainingType.category}</td>
 
                   <td>
-                    <Link to={`/admin/book/${book._id}/edit`}>
+                    <Link to={`/admin/trainingType/${trainingType._id}/edit`}>
                       <Button variant="light" className="btn-sm mx-2">
                         <FaEdit />
                       </Button>
@@ -94,7 +94,7 @@ const BookListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => deleteHandler(book._id)}
+                      onClick={() => deleteHandler(trainingType._id)}
                     >
                       <FaTrash style={{ color: "white" }} />
                     </Button>
@@ -109,4 +109,4 @@ const BookListScreen = () => {
   );
 };
 
-export default BookListScreen;
+export default TrainingTypeListScreen;

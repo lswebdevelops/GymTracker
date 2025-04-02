@@ -53,7 +53,7 @@ const Header = () => {
 
             <Nav.Link
               as={Link}
-              to="/books"
+              to="/trainingTypes"
               className="d-flex align-items-center me-3"
             >
               <FaBook size={20} className="d-lg-none" />
@@ -116,7 +116,7 @@ const Header = () => {
                 <NavDropdown title={<FaUserTie size={20} />} id="adminmenu">
                   <NavDropdown.Item
                     as={Link}
-                    to="/admin/booklist"
+                    to="/admin/trainingTypelist"
                     className="admin-menu-a"
                   >
                     Editar Treinos

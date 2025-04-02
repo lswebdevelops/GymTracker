@@ -20,7 +20,7 @@ const Footer = () => {
 
               <Link
                 as={Link}
-                to="/books"
+                to="/trainingTypes"
                 className="d-flex align-items-center me-3"
               >
                 <FaBook size={20} className="d-lg-none" />

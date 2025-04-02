@@ -4,26 +4,26 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import {
-  useGetBookDetailsQuery,
+  useGetTrainingTypeDetailsQuery,
   useCreateReviewMutation,
-} from "../slices/booksApiSlice";
+} from "../slices/trainingTypesApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { toast } from "react-toastify";
 
-const BookScreen = () => {
-  const { id: bookId } = useParams();
+const TrainingTypeScreen = () => {
+  const { id: trainingTypeId } = useParams();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
   const {
-    data: book,
+    data: trainingType,
     isLoading,
     refetch,
     error,
-  } = useGetBookDetailsQuery(bookId);
+  } = useGetTrainingTypeDetailsQuery(trainingTypeId);
 
-  const [createReview, { isLoading: loadingBookReview }] =
+  const [createReview, { isLoading: loadingTrainingTypeReview }] =
     useCreateReviewMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
@@ -32,7 +32,7 @@ const BookScreen = () => {
     e.preventDefault();
     try {
       await createReview({
-        bookId,
+        trainingTypeId,
         rating,
         comment,
       }).unwrap();
@@ -45,7 +45,7 @@ const BookScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/books">
+      <Link className="btn btn-light my-3" to="/trainingTypes">
         Voltar
       </Link>
 
@@ -58,12 +58,12 @@ const BookScreen = () => {
       ) : (
         <>
           <hr />
-          <div className="upper-div-book-div">
-            <Row className="upper-div-book upper-div-training">
+          <div className="upper-div-trainingType-div">
+            <Row className="upper-div-trainingType upper-div-training">
               <Col md={6}>
-                <h3>{book.name}</h3>
-                <h4>{book.category}</h4>
-                <p>{book.description}</p>
+                <h3>{trainingType.name}</h3>
+                <h4>{trainingType.category}</h4>
+                <p>{trainingType.description}</p>
               </Col>
             </Row>
           </div>
@@ -74,4 +74,4 @@ const BookScreen = () => {
   );
 };
 
-export default BookScreen;
+export default TrainingTypeScreen;

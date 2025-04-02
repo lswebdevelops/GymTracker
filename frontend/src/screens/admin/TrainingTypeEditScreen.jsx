@@ -6,13 +6,13 @@ import Loader from "../../components/Loader";
 import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
 import {
-  useUpdateBookMutation,
-  useGetBookDetailsQuery,
-  useUploadBookImageMutation,
-} from "../../slices/booksApiSlice";
+  useUpdateTrainingTypeMutation,
+  useGetTrainingTypeDetailsQuery,
+  useUploadTrainingTypeImageMutation,
+} from "../../slices/trainingTypesApiSlice";
 
-const BookEditScreen = () => {
-  const { id: bookId } = useParams();
+const TrainingTypeEditScreen = () => {
+  const { id: trainingTypeId } = useParams();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -22,31 +22,31 @@ const BookEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
-  const { data: book, isLoading, error } = useGetBookDetailsQuery(bookId);
+  const { data: trainingType, isLoading, error } = useGetTrainingTypeDetailsQuery(trainingTypeId);
 
-  const [updateBook, { isLoading: loadingUpdate }] = useUpdateBookMutation();
+  const [updateTrainingType, { isLoading: loadingUpdate }] = useUpdateTrainingTypeMutation();
 
-  const [uploadBookImage, { isLoading: loadingUpload }] =
-    useUploadBookImageMutation();
+  const [uploadTrainingTypeImage, { isLoading: loadingUpload }] =
+    useUploadTrainingTypeImageMutation();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (book) {
-      setName(book.name);
-      setPrice(book.price);
-      setImage(book.image);
-      setBrand(book.brand);
-      setCategory(book.category);
-      setCountInStock(book.countInStock);
-      setDescription(book.description);
+    if (trainingType) {
+      setName(trainingType.name);
+      setPrice(trainingType.price);
+      setImage(trainingType.image);
+      setBrand(trainingType.brand);
+      setCategory(trainingType.category);
+      setCountInStock(trainingType.countInStock);
+      setDescription(trainingType.description);
     }
-  }, [book]);
+  }, [trainingType]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const updatedBook = {
-      bookId,
+    const updatedTrainingType = {
+      trainingTypeId,
       name,
       price,
       image,
@@ -56,12 +56,12 @@ const BookEditScreen = () => {
       description,
     };
 
-    const result = await updateBook(updatedBook);
+    const result = await updateTrainingType(updatedTrainingType);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Book updated");
-      navigate("/admin/booklist");
+      toast.success("Training Type updated");
+      navigate("/admin/trainingTypelist");
     }
   };
 
@@ -69,7 +69,7 @@ const BookEditScreen = () => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
     try {
-      const res = await uploadBookImage(formData).unwrap();
+      const res = await uploadTrainingTypeImage(formData).unwrap();
       toast.success(res.message);
 
       // Normalize the path to always use forward slashes
@@ -82,7 +82,7 @@ const BookEditScreen = () => {
 
   return (
     <>
-      <Link to="/admin/booklist" className="btn btn-light my-3">
+      <Link to="/admin/trainingTypelist" className="btn btn-light my-3">
         Voltar
       </Link>
       <FormContainer>
@@ -174,4 +174,4 @@ const BookEditScreen = () => {
   );
 };
 
-export default BookEditScreen;
+export default TrainingTypeEditScreen;

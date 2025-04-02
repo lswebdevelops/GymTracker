@@ -2,7 +2,7 @@ import UpcomingImage from "./assets/chamado.png";
 import UpcomingImage2 from "./assets/contosraros.png";
 import UpcomingImage3 from "./assets/autiro.png";
 
-const bookData = [
+const trainingTypeData = [
   {
     id: 1,
     title: "O Chamado",
@@ -32,4 +32,4 @@ const bookData = [
   },
 ];
 
-export default bookData;
+export default trainingTypeData;

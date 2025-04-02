@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import HomeScreen from "./screens/HomeScreen";
-import HomeBookScreen from "./screens/HomeBookScreen";
+import HomeTrainingTypeScreen from "./screens/HomeTrainingTypeScreen";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import BooksScreen from "./screens/BooksScreen";
+import TrainingTypesScreen from "./screens/TrainingTypesScreen";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,8 +20,8 @@ import "./assets/styles/index.css";
 import "./assets/styles/bootstrap.custom.css";
 import App from "./App";
 import ProfileScreen from "./screens/ProfileScreen";
-import BookListScreen from "./screens/admin/BookListScreen";
-import BookEditScreen from "./screens/admin/BookEditScreen";
+import TrainingTypeListScreen from "./screens/admin/TrainingTypeListScreen";
+import TrainingTypeEditScreen from "./screens/admin/TrainingTypeEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
 
@@ -46,11 +46,11 @@ const router = createBrowserRouter(
         path="/search/:keyword/page/:pageNumber"
         element={<HomeScreen />}
       />
-      <Route path="/book/:id" element={<HomeBookScreen />} />
+      <Route path="/trainingType/:id" element={<HomeTrainingTypeScreen />} />
            <Route path="/login/" element={<LoginScreen />} />
       <Route path="/register/" element={<RegisterScreen />} />
          <Route path="/biography" element={<BiographyScreen />} />
-      <Route path="/books" element={<BooksScreen />} />
+      <Route path="/trainingTypes" element={<TrainingTypesScreen />} />
 
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen  />} />
@@ -62,12 +62,12 @@ const router = createBrowserRouter(
 
       {/* admin routes */}
       <Route path="" element={<AdminRoute />}>        
-        <Route path="/admin/booklist/" element={<BookListScreen />} />
+        <Route path="/admin/trainingTypelist/" element={<TrainingTypeListScreen />} />
         <Route
-          path="/admin/booklist/:pageNumber/"
-          element={<BookListScreen />}
+          path="/admin/trainingTypelist/:pageNumber/"
+          element={<TrainingTypeListScreen />}
         />
-        <Route path="/admin/book/:id/edit" element={<BookEditScreen />} />
+        <Route path="/admin/trainingType/:id/edit" element={<TrainingTypeEditScreen />} />
         <Route path="/admin/userlist/" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
         <Route path="/admin/email-list" element={<UsersEmailListScreen />} />

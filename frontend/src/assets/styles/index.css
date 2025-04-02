@@ -10,7 +10,7 @@ main {
   color: #f8e825;
 }
 
-.book-rating-h2 {
+.trainingType-rating-h2 {
   border-radius: 8px;
 }
 .rating-text {
@@ -19,7 +19,7 @@ main {
   padding-left: 0.5rem;
 }
 
-.book-title {
+.trainingType-title {
   height: 2.5em; /* Set a fixed height */
   overflow: hidden; /* Hide overflow content */
   text-overflow: ellipsis; /* Add ellipsis for long text */
@@ -67,24 +67,24 @@ table th {
   opacity: 0.7;
   z-index: 4;
 }
-.available-books {
+.available-trainingTypes {
   padding: 10px 10px 10px 20px;
 }
-.upper-div-book-div {
+.upper-div-trainingType-div {
   display: flex;
   justify-content: center;
 }
-.upper-div-book {
+.upper-div-trainingType {
   margin-bottom: 25px;
   max-width: 1140px;
 }
-.upper-div-book img {
+.upper-div-trainingType img {
   box-shadow: 8px 2px 5px rgba(0, 0, 0, 0.3), 0px 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   margin-bottom: 23px;
 }
 
-.image-book-book {
+.image-trainingType-trainingType {
   position: relative;
   animation: moveFromLeft 1.2s ease-out; /* Adjust timing and easing as needed */
 }
@@ -135,7 +135,7 @@ table th {
 
 main {
   position: relative;
-  /* background-image: url("../../assets/library-book-book-read.jpg"); */
+  /* background-image: url("../../assets/library-trainingType-trainingType-read.jpg"); */
   background-size: cover;
   margin: 0;
 }
@@ -157,9 +157,9 @@ main > * {
   z-index: 2;
 }
 
-.caroulsel-book-right-side {
+.caroulsel-trainingType-right-side {
   position: relative;
-  /* background-image: url("../../assets/library-book-book-read.jpg"); */
+  /* background-image: url("../../assets/library-trainingType-trainingType-read.jpg"); */
   /* background-size: cover; */
   margin: 0;
 }
@@ -198,7 +198,7 @@ main > * {
   text-align: right;
 }
 .poemsPageH1,
-.booksPageH1 {
+.trainingTypesPageH1 {
   text-align: center;
   font-size: 3rem;
   margin: 50px;
@@ -212,7 +212,7 @@ main > * {
 .carousel {
   margin-top: 52px;
 }
-.container-div-book-view {
+.container-div-trainingType-view {
   background-color: none;
 }
 .main {
@@ -222,7 +222,7 @@ main > * {
 .container {
   max-width: 1960px;
 }
-.book-description {
+.trainingType-description {
   white-space: pre-wrap;
 }
 .h1-recent-titles {
@@ -256,7 +256,7 @@ main > * {
   }
 }
 .bio-content,
-.upper-div-book p,
+.upper-div-trainingType p,
 .poemContainer {
   position: relative;
   opacity: 0; /* Start fully transparent */
@@ -282,7 +282,7 @@ main > * {
 }
 
 .poemContainer,
-.books-keyframe {
+.trainingTypes-keyframe {
   position: relative;
   opacity: 0; /* Start fully transparent */
   animation: fadeIn 3s ease-out forwards; /* Wait for 1.2s and then become visible */
@@ -296,7 +296,7 @@ main > * {
     opacity: 1; /* Fully visible at the end */
   }
 }
-.books-keyframe:hover,
+.trainingTypes-keyframe:hover,
 .poemContainer:hover {
   scale: 1.02;
 }
@@ -482,13 +482,13 @@ p {
 
 /* blog */
 .blogHomeScreenContainer,
-.bookHomeScreenContainer {
+.brainingTypeHomeScreenContainer {
   display: flex;
   justify-content: center;
 }
 
 .blogHomeScreen,
-.bookHomeScreen {
+.brainingTypeHomeScreen {
   max-width: 1140px;
 }
 

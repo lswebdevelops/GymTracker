@@ -25,7 +25,7 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
-const bookSchema = new mongoose.Schema(
+const trainingTypeSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -79,6 +79,6 @@ const bookSchema = new mongoose.Schema(
   }
 );
 
-const Book = mongoose.model("Book", bookSchema);
+const TrainingType = mongoose.model("TrainingType", trainingTypeSchema);
 
-export default Book;
+export default TrainingType;

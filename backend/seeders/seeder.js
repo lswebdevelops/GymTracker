@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import users from '../data/users.js';
-import books from './data/books.js';
+import trainingTypes from './data/trainingTypes.js';
 import User from '../models/userModel.js';
-import Book from '../models/bookModel.js';
+import trainingType from '../models/trainingTypeModel.js';
 import connectDB from '../config/db.js';
 
 dotenv.config();
@@ -12,18 +12,18 @@ connectDB();
 
 const importData = async () => {
   try {
-    await Book.deleteMany();
+    await TrainingType.deleteMany();
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
 
     const adminUser = createdUsers[0]._id;
 
-    const sampleBooks = books.map((book) => {
-      return { ...book, user: adminUser };
+    const sampleTrainingTypes = trainingTypes.map((trainingType) => {
+      return { ...trainingType, user: adminUser };
     });
 
-    await Book.insertMany(sampleBooks);
+    await TrainingType.insertMany(sampleTrainingTypes);
 
     console.log('Data Imported!'.green.inverse);
     process.exit();
@@ -36,7 +36,7 @@ const importData = async () => {
 const destroyData = async () => {
   try {
    
-    await Book.deleteMany();
+    await TrainingType.deleteMany();
     await User.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);

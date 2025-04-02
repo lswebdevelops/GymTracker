@@ -1,21 +1,21 @@
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useGetBooksQuery } from "../slices/booksApiSlice";
+import { useGetTrainingTypesQuery } from "../slices/trainingTypesApiSlice";
 import { Link } from "react-router-dom";
-import Book from "../components/Book";
+import TrainingType from "../components/TrainingType";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-const BookScreen = () => {
+const TrainingTypeScreen = () => {
   const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error } = useGetBooksQuery({
+  const { data, isLoading, error } = useGetTrainingTypesQuery({
     keyword,
     pageNumber,
   });
 
   return (
-    <div className="bookHomeScreenContainer">
+    <div className="trainingTypeHomeScreenContainer">
       <div className="homeScreen">
         {!keyword ? (
           ""
@@ -32,18 +32,18 @@ const BookScreen = () => {
           </Message>
         ) : (
           <>
-            <h1 className="booksPageH1">Treinos</h1>
+            <h1 className="trainingTypesPageH1">Treinos</h1>
             <Row>
-              {data.books.map((book) => (
+              {data.trainingTypes.map((trainingType) => (
                 <Col
-                  key={book._id}
+                  key={trainingType._id}
                   sm={12}
                   md={6}
                   lg={4}
                   xl={3}
                   className="home-screen-training-box"
                 >
-                  <Book book={book} />
+                  <TrainingType trainingType={trainingType} />
                   <Col md={6}></Col>
                 </Col>
               ))}
@@ -55,4 +55,4 @@ const BookScreen = () => {
   );
 };
 
-export default BookScreen;
+export default TrainingTypeScreen;
