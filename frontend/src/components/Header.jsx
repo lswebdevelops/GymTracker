@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-import { resetCart } from "../slices/cartSlice";
 import logo from "../assets/gt-logo.png";
 import SearchBox from "./SearchBox";
 
@@ -26,8 +25,7 @@ const Header = () => {
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
-      dispatch(logout());
-      dispatch(resetCart());
+      dispatch(logout());     
       navigate("/login");
     } catch (err) {
       console.log(err);

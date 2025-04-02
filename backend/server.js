@@ -6,11 +6,9 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import biographyRoutes from './routes/biographyRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
-import poemRoutes from './routes/poemRoutes.js'; 
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -31,16 +29,11 @@ app.use(cookieParser());
 
 app.use("/api/books", bookRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
-app.use("/api/poems", poemRoutes);
 app.use("/api/biography", biographyRoutes);
 app.use("/api/blogs", blogRoutes);
 
 
-app.get("/api/config/paypal", (req, res) =>
-  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
-);
 
 const __dirname = path.resolve(); // set __dirname to current directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
