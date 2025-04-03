@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Image, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import {
   useGetMyWorkoutDetailsQuery,
@@ -9,20 +9,17 @@ import { Link } from "react-router-dom";
 import TrainingType from "../components/TrainingType";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import homePhoto from "../assets/gymPhoto.png";
 
 const HomeScreen = () => {
-  const { pageNumber, keyword } = useParams();
-  const {
-    data: myWorkout,
-    isLoading,
-    error,
-    refetch,
-  } = useGetMyWorkoutDetailsQuery();
+  const { keyword } = useParams();
+  const { data: myWorkout, isLoading, error, refetch } =
+    useGetMyWorkoutDetailsQuery();
   const [updateWorkout] = useUpdateMyWorkoutMutation();
 
   const [workoutsArray, setWorkoutsArray] = useState([]);
-  const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
+  const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(
+    parseInt(localStorage.getItem("currentWorkoutIndex")) || 0
+  );
 
   useEffect(() => {
     if (myWorkout && myWorkout.length > 0) {
@@ -39,9 +36,9 @@ const HomeScreen = () => {
         workoutData: { status: "completed" },
       }).unwrap();
 
-      setCurrentWorkoutIndex(
-        (prevIndex) => (prevIndex + 1) % workoutsArray.length
-      );
+      const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
+      setCurrentWorkoutIndex(newIndex);
+      localStorage.setItem("currentWorkoutIndex", newIndex); // Save in localStorage
 
       setTimeout(() => {
         refetch();
