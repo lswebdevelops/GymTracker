@@ -80,8 +80,8 @@ const HomeTrainingTypeScreen = () => {
         <>
           <hr />
           <div className="upper-div-trainingType-div">
-            <Row className="upper-div-trainingType upper-div-training">
-              <Col md={6}>
+            <Row className="">
+              <Col md={12} lg={12} sm={12}>
                 <h3>{trainingType.name}</h3>
                 <h4>{trainingType.category}</h4>
                 <p>{trainingType.description}</p>

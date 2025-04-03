@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import FormContainer from "../../components/FormContainer";
@@ -104,89 +104,129 @@ const TrainingTypeEditScreen = () => {
       <Link to="/admin/trainingTypelist" className="btn btn-light my-3">
         Voltar
       </Link>
-      <FormContainer>
-        <h1>Editar Treino</h1>
-        {loadingUpdate && <Loader />}
-        {isLoading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error.data.message}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name" className="my-2">
-              <Form.Label>Treino</Form.Label>
-              <Form.Control
-                as="select"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              >
-                {[
-                  "A1",
-                  "A2",
-                  "A3",
-                  "A4",
-                  "A5",
-                  "B1",
-                  "B2",
-                  "B3",
-                  "B4",
-                  "B5",
-                  "C1",
-                  "C2",
-                  "C3",
-                  "C4",
-                  "C5",
-                  "D1",
-                  "D2",
-                  "D3",
-                  "D4",
-                  "D5",
-                  "E1",
-                  "E2",
-                  "E3",
-                  "E4",
-                  "E5",
-                  "F1",
-                  "F2",
-                  "F3",
-                  "F4",
-                  "F5",
-                ].map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
 
-            <Form.Group controlId="category" className="my-2">
-              <Form.Label>Grupo Muscular</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Nome do Grupo Muscular"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+      <Row className="g-3">
+        {/* Left section - 70% width */}
+        <Col lg={6} md={12} sm={12}>
+          <div className="p-3 bg-light rounded shadow">
+            <FormContainer>
+              <h1>Editar Treino</h1>
+              {loadingUpdate && <Loader />}
+              {isLoading ? (
+                <Loader />
+              ) : error ? (
+                <Message variant="danger">{error.data.message}</Message>
+              ) : (
+                <Form onSubmit={submitHandler}>
+                  <Form.Group controlId="name" className="my-2">
+                    <Form.Label>Treino</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    >
+                      {[
+                        "A1",
+                        "A2",
+                        "A3",
+                        "A4",
+                        "A5",
+                        "B1",
+                        "B2",
+                        "B3",
+                        "B4",
+                        "B5",
+                        "C1",
+                        "C2",
+                        "C3",
+                        "C4",
+                        "C5",
+                        "D1",
+                        "D2",
+                        "D3",
+                        "D4",
+                        "D5",
+                        "E1",
+                        "E2",
+                        "E3",
+                        "E4",
+                        "E5",
+                        "F1",
+                        "F2",
+                        "F3",
+                        "F4",
+                        "F5",
+                      ].map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
 
-            <Form.Group controlId="description" className="my-2">
-              <Form.Label>Exercícios</Form.Label>
-              <Form.Control
-                type="text"
-                as="textarea"
-                rows={15}
-                placeholder="Adicione os exercícios"
-                value={description}
-                maxLength="2000"
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Button type="submit" variant="primary" className="my-2">
-              Salvar
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
+                  <Form.Group controlId="category" className="my-2">
+                    <Form.Label>Grupo Muscular</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nome do Grupo Muscular"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+
+                  <Form.Group controlId="description" className="my-2">
+                    <Form.Label>Exercícios</Form.Label>
+                    <Form.Control
+                      type="text"
+                      as="textarea"
+                      rows={15}
+                      placeholder="Adicione os exercícios"
+                      value={description}
+                      maxLength="2000"
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+
+                  <Button type="submit" variant="primary" className="my-2">
+                    Salvar
+                  </Button>
+                </Form>
+              )}
+            </FormContainer>
+          </div>
+        </Col>
+
+        {/* Right section - 30% width */}
+        <Col lg={6} md={12} sm={12}>
+          <div className="p-3 bg-white rounded shadow">
+            <h4>Como Organizar os Treinos</h4>
+            <p>
+              Os treinos são organizados por letras, cada uma representando um
+              grupo muscular específico: 
+              <li>- A: Pernas </li>
+              <li>- B: Costas </li>
+              <li>- C: Bíceps </li>
+              <li>- D: Tríceps</li> 
+              <li>- E: Peito </li>
+              <li>- F: Funcional</li>
+            </p>
+            <p>
+              Os treinos devem ser montados combinando letras diferentes, mas
+              mantendo a mesma numeração. 
+              <hr />
+              Exemplos:
+            </p>
+            <ul>
+              <li>
+                <strong>Treino 1</strong>: 4 exercícios → A1, B1, C1, D1
+              </li>
+              <li>
+                <strong>Treino 2</strong>: 5 exercícios → A2, B2, C2, D2, E2
+              </li>
+            </ul>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 };

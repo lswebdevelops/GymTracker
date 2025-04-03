@@ -699,24 +699,5 @@ a {
   align-self: center; /* Centers this element inside .homeScreen */
 }
 
-.trainingTypeHomeScreenContainer{
-  margin: 0;
-  padding: 0;
-}
-.home-screen-training-inside-box {
-  height: auto;
-  font-size: 1rem;;
-}
-.upper-div-training {
-  width: 98%;
-}
 
-.button-training-done{
-  max-width: 350px;
-  min-width: 300px;;
-}
-.h1-recent-titles{
- margin: 0;
- padding: 0;;
 
-}

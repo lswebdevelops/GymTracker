@@ -93,7 +93,7 @@ const Header = () => {
 
           <Navbar.Collapse id="user-navbar-collapse">
             <Nav className="ms-auto">
-              <SearchBox />
+              
 
               {/* User Dropdown */}
               {userInfo ? (

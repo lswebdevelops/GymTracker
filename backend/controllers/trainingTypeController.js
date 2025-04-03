@@ -43,25 +43,15 @@ const getTrainingTypeById = asyncHandler(async (req, res) => {
 
 const createTrainingType = asyncHandler(async (req, res) => {
   const trainingType = new TrainingType({
-    name: "A1",
+    name: "-",
     price: 0,
     user: req.user._id,
     image: "/images/samplebook2.png",
     brand: "Z",
-    category: "Pernas",
+    category: "grupo muscular",
     countInStock: 0,
     numReviews: 0,
-    description: `1️⃣ Agachamento Livre – 4 séries de 8-12 repetições
-
-2️⃣ Leg Press – 3 séries de 10-12 repetições
-
-3️⃣ Afundo com Halteres – 3 séries de 10 repetições por perna
-
-4️⃣ Stiff com Barra ou Halteres – 3 séries de 10-12 repetições
-
-5️⃣ Cadeira Extensora – 3 séries de 12-15 repetições
-
-6️⃣ Panturrilha no Smith ou Máquina – 3 séries de 15-20 repetições`,
+    description: `Adicionar séries erepetições`,
   });
 
   const createdTrainingType = await trainingType.save();
