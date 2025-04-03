@@ -12,10 +12,16 @@ import {
 import { protect, admin } from "../middleware/authMiddleware.js";
 import checkObjectId from "../middleware/checkObjectId.js";
 
-router.route("/").get(getTrainingTypes).post(protect, admin, createTrainingType);
-router.route("/:id/reviews").post(protect, checkObjectId,createTrainingTypeReview);
+router
+  .route("/")
+  .get(getTrainingTypes)
+  .post(protect, admin, createTrainingType);
+router
+  .route("/:id/reviews")
+  .post(protect, checkObjectId, createTrainingTypeReview);
 
 router.get("/top", getTopTrainingTypes);
+
 router
   .route("/:id")
   .get(getTrainingTypeById)

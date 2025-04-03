@@ -7,6 +7,8 @@ import AdminRoute from "./components/AdminRoute";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import TrainingTypesScreen from "./screens/TrainingTypesScreen";
+import MyTrainingScreen from './screens/MyTrainingScreen';
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -54,6 +56,7 @@ const router = createBrowserRouter(
 
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen  />} />
+             <Route path="/myWorkout/" element={<MyTrainingScreen />} />
      
       {/* user private route */}
       <Route path="" element={<PrivateRoute />}>     

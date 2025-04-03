@@ -4,9 +4,10 @@ import {
   FaUser,
   FaUserTie,
   FaHome,
-  FaBook,  
+  FaWeightHanging,
   FaUserAlt,
   FaNewspaper,
+  FaDumbbell,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -25,7 +26,7 @@ const Header = () => {
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
-      dispatch(logout());     
+      dispatch(logout());
       navigate("/login");
     } catch (err) {
       console.log(err);
@@ -40,7 +41,7 @@ const Header = () => {
           <Navbar.Brand href="/">
             <img src={logo} alt="logo of HW" className="logo-hw" />
           </Navbar.Brand>
-        
+
           <Nav className="me-auto d-flex flex-row nav-header">
             <Nav.Link
               as={Link}
@@ -56,9 +57,20 @@ const Header = () => {
               to="/trainingTypes"
               className="d-flex align-items-center me-3"
             >
-              <FaBook size={20} className="d-lg-none" />
+              <FaWeightHanging size={20} className="d-lg-none" />
               <span className="ms-2 d-none d-lg-inline">Treinos</span>
             </Nav.Link>
+            {userInfo && (
+              <Nav.Link
+                as={Link}
+                to="/myWorkout"
+                className="d-flex align-items-center me-3"
+              >
+                <FaDumbbell size={20} className="d-lg-none" />
+                <span className="ms-2 d-none d-lg-inline">Meu Treino</span>
+              </Nav.Link>
+            )}
+
             <Nav.Link
               as={Link}
               to="/blogs"

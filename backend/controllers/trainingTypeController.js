@@ -1,6 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import TrainingType from "../models/trainingTypeModel.js";
-
+import Workout from "../models/myWorkoutModel.js";
 // @desc Fetch all TrainingTypes
 // @route get /api/TrainingTypes
 // @access Public
@@ -43,7 +43,7 @@ const getTrainingTypeById = asyncHandler(async (req, res) => {
 
 const createTrainingType = asyncHandler(async (req, res) => {
   const trainingType = new TrainingType({
-    name: "Treino Novo",
+    name: "A1",
     price: 0,
     user: req.user._id,
     image: "/images/samplebook2.png",
@@ -103,8 +103,11 @@ const deleteTrainingType = asyncHandler(async (req, res) => {
   const trainingType = await TrainingType.findById(req.params.id);
 
   if (trainingType) {
-    await TrainingType.deleteOne({ _id: trainingType._id });
-    res.status(200).json({ message: "Livro deletado" });
+    // Remove o treino
+    await trainingType.deleteOne();
+    // Remove todos os workouts que referenciam esse treino
+    await Workout.deleteMany({ trainingType: trainingType._id });
+    res.status(200).json({ message: "Treino deletado e removido dos workouts dos usuários" });
   } else {
     res.status(404);
     throw new Error("Recurso não encontrado");

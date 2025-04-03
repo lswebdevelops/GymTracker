@@ -30,13 +30,13 @@ export const TrainingTypesApiSlice = apiSlice.injectEndpoints({
       ] /* stops it from being cashed (always new data loading to the page) */,
     }),
     updateTrainingType: builder.mutation({
-      query: (data) => ({
-        url: `${TRAININGTYPES_URL}/${data.TrainingTypeId}`,
+      query: ({ trainingTypeId, ...updatedTrainingType }) => ({
+        url: `/api/trainingTypes/${trainingTypeId}`,  // ID na URL
         method: "PUT",
-        body: data,
+        body: updatedTrainingType,
       }),
-      invalidatesTags: ["TrainingType"] /**cleans cash for later reload */,
     }),
+    
     uploadTrainingTypeImage: builder.mutation({
       query: (data) => ({
         url: `${UPLOAD_URL}`,

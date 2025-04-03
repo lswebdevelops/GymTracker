@@ -15,7 +15,6 @@ const BlogDetailsScreen = () => {
   const { data: blog, isLoading, error, refetch } = useGetBlogDetailsQuery(id);
   const userInfo = useSelector((state) => state.auth.userInfo);
 
-  console.log(userInfo);
 
   const [comment, setComment] = useState("");
   const [addComment] = useAddCommentToBlogMutation();

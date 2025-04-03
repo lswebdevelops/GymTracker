@@ -22,12 +22,16 @@ const TrainingTypeEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
-  const { data: trainingType, isLoading, error } = useGetTrainingTypeDetailsQuery(trainingTypeId);
+  const {
+    data: trainingType,
+    isLoading,
+    error,
+  } = useGetTrainingTypeDetailsQuery(trainingTypeId);
 
-  const [updateTrainingType, { isLoading: loadingUpdate }] = useUpdateTrainingTypeMutation();
+  const [updateTrainingType, { isLoading: loadingUpdate }] =
+    useUpdateTrainingTypeMutation();
 
-  const [uploadTrainingTypeImage, { isLoading: loadingUpload }] =
-    useUploadTrainingTypeImageMutation();
+  const [uploadTrainingTypeImage] = useUploadTrainingTypeImageMutation();
 
   const navigate = useNavigate();
 
@@ -45,8 +49,13 @@ const TrainingTypeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!trainingTypeId) {
+      toast.error("Erro: ID do treino não encontrado!");
+      return;
+    }
+
     const updatedTrainingType = {
-      trainingTypeId,
       name,
       price,
       image,
@@ -56,12 +65,22 @@ const TrainingTypeEditScreen = () => {
       description,
     };
 
-    const result = await updateTrainingType(updatedTrainingType);
-    if (result.error) {
-      toast.error(result.error);
-    } else {
-      toast.success("Training Type updated");
-      navigate("/admin/trainingTypelist");
+    try {
+      // Envia o ID e os dados corretamente
+      const result = await updateTrainingType({
+        trainingTypeId,
+        ...updatedTrainingType,
+      });
+
+      if (result.error) {
+        toast.error(result.error.data?.message || "Erro ao atualizar treino");
+      } else {
+        toast.success("Treino atualizado com sucesso");
+        navigate("/admin/trainingTypelist");
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error("Erro ao atualizar treino");
     }
   };
 
@@ -139,8 +158,6 @@ const TrainingTypeEditScreen = () => {
                 ))}
               </Form.Control>
             </Form.Group>
-
-           
 
             <Form.Group controlId="category" className="my-2">
               <Form.Label>Grupo Muscular</Form.Label>
