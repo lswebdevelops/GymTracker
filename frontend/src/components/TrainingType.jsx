@@ -10,10 +10,9 @@ const TrainingType = ({ trainingType }) => {
         <Link to={`/trainingType/${trainingType._id}`}>
           <Card.Title
             as="div"
-            className="trainingType-title home-screen-training-inside-box"
+            className="home-screen-training-inside-box"
           >
-            <strong>{trainingType.name}</strong>
-            <hr />
+            <strong>{trainingType.name}</strong> { "-"}     
             <strong>{trainingType.category}</strong> 
             {/* <strong>{trainingType.brand}</strong> */}
             <hr />

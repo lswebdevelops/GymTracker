@@ -10,7 +10,7 @@ const getMyWorkout = asyncHandler(async (req, res) => {
 
   if (!workout || workout.length === 0) {
     res.status(404);
-    throw new Error("Treino não encontrado");
+    throw new Error("Adicione um Treino");
   }
 
   res.json(workout);
@@ -67,8 +67,7 @@ const updateMyWorkout = asyncHandler(async (req, res) => {
     throw new Error("Treino não encontrado");
   }
 
-  console.log("Treino atualizado no MongoDB:", updatedWorkout); // 🔍 Verificar se o status está lá
-
+ 
   res.json(updatedWorkout);
 });
 

@@ -20,8 +20,8 @@ const MyTrainingScreen = () => {
   // Se o erro for "Workout not found", exibe mensagem de treino não adicionado.
   if (
     error &&
-    (error?.data?.message === "Treino não encontrado" ||
-      error.error === "Treino não encontrado")
+    (error?.data?.message === "Adicione um Treino" ||
+      error.error === "Adicione um Treino")
   ) {
     return <Message>Nenhum treino adicionado.</Message>;
   }
@@ -49,8 +49,11 @@ const MyTrainingScreen = () => {
                     <Card.Title className="text-primary">
                       {training.name}
                     </Card.Title>
+                    <hr />
                     <Card.Text>
                       <strong>Categoria:</strong> {training.category || "N/A"}
+                      <br />
+                      <br />
                       {training.description || "Sem descrição"}
                     </Card.Text>
                     <div className="d-flex justify-content-between mt-3">
