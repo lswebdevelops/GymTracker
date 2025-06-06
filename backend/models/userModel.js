@@ -25,6 +25,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    currentExerciseIndex: { // Novo campo para rastrear o progresso
+      type: Number,
+      default: 0,
+    },
+    currentTrainingProgramId: { // Opcional: Se você precisa rastrear qual programa o usuário está seguindo
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TrainingProgram', // Supondo que você tenha um model chamado 'TrainingProgram'
+      default: null,
+    },
   },
   {
     timestamps: true,

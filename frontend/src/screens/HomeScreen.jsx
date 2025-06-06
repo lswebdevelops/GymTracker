@@ -29,24 +29,26 @@ const HomeScreen = () => {
     }
   }, [myWorkout]);
 
-  const handleWorkoutDone = async (id) => {
-    try {
-      await updateWorkout({
-        id,
-        workoutData: { status: "completed" },
-      }).unwrap();
+ const handleWorkoutDone = async (id) => {
+  console.log('Botão "Próximo Treino" clicado! ID do treino:', id);
+  try {
+    const result = await updateWorkout({
+      id,
+      workoutData: { status: "completed" },
+    }).unwrap();
+    console.log('Resultado da mutation updateWorkout:', result); // Adicione esta linha
 
-      const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
-      setCurrentWorkoutIndex(newIndex);
-      localStorage.setItem("currentWorkoutIndex", newIndex); // Save in localStorage
+    const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
+    setCurrentWorkoutIndex(newIndex);
+    localStorage.setItem("currentWorkoutIndex", newIndex); // Save in localStorage
 
-      setTimeout(() => {
-        refetch();
-      }, 500);
-    } catch (error) {
-      console.error("Erro ao marcar treino como feito:", error);
-    }
-  };
+    setTimeout(() => {
+      refetch();
+    }, 500);
+  } catch (error) {
+    console.error("Erro ao marcar treino como feito:", error);
+  }
+};
 
   if (isLoading) return <Loader />;
   if (error)

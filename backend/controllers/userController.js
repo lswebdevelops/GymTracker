@@ -191,6 +191,44 @@ const getEmails = asyncHandler(async (req, res) => {
   const emails = users.map((user) => user.email); // Collect only emails
   res.status(200).json(emails);
 });
+// @desc    Atualizar o progresso do treino do usuário
+// @route   PUT /api/users/:id/workoutprogress
+// @access  Private
+const updateUserWorkoutProgress = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const { currentExerciseIndex } = req.body;
+
+  console.log('Atualizando progresso para o usuário:', userId);
+  console.log('Novo índice do exercício:', currentExerciseIndex);
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    user.currentExerciseIndex = currentExerciseIndex;
+    const updatedUser = await user.save();
+    console.log('Progresso salvo no banco de dados:', updatedUser.currentExerciseIndex);
+    res.json({ message: 'Progresso do treino atualizado com sucesso', currentExerciseIndex: updatedUser.currentExerciseIndex });
+  } else {
+    res.status(404);
+    throw new Error('Usuário não encontrado');
+  }
+});
+
+// @desc    Obter o progresso do treino do usuário
+// @route   GET /api/users/:id/workoutprogress
+// @access  Private
+const getUserWorkoutProgress = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    res.json({ currentExerciseIndex: user.currentExerciseIndex });
+  } else {
+    res.status(404);
+    throw new Error('Usuário não encontrado');
+  }
+});
 
 export {
   authUser,
@@ -203,4 +241,6 @@ export {
   deleteUser,
   getUserById,
   getEmails,
+  updateUserWorkoutProgress,
+  getUserWorkoutProgress,
 };
