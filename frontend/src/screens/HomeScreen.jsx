@@ -61,7 +61,7 @@ const HomeScreen = () => {
   return (
     <Container className="trainingTypeHomeScreenContainer text-center py-4">
       {!keyword ? (
-        <h1 className="h1-recent-titles mb-4">Exercício do Dia</h1>
+        <h1 className="h1-recent-titles mb-4">Seu Exercício</h1>
       ) : (
         <Link to="/" className="btn btn-light mb-4">
           Voltar

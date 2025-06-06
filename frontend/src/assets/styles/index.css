@@ -227,7 +227,8 @@ main > * {
 }
 .h1-recent-titles {
   text-align: center;
-  margin: 85px 85px 85px 85px;
+  font-size: 1.1rem;
+  margin: 15px 15px 15px 15px;
 }
 
 /*  bio */
