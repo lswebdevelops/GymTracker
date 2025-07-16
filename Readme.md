@@ -7,7 +7,7 @@ Gym Tracker is a workout tracking app designed to help users manage their exerci
 [Link coming soon]
 
 ## 📸 Screenshot
-![Gym Tracker](https://github.com/yourusername/Gym Tracker/uploads/screenshot.png)
+![Gym Tracker](https://github.com/lswebdevelops/Gym Tracker/uploads/screenshot.png)
 
 ## 🛠️ Tech Stack
 - **Frontend:** React, HTML, CSS  
