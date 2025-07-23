@@ -32,15 +32,41 @@ git clone https://github.com/yourusername/GymTracker.git
 ### Navigate to the project directory
 ```sh
 cd GymTracker
+
+### comment /server.js like: 
+// uncomment for production build
+// then add this script to the root package.json (   "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend") and to .env :> NODE_ENV=development change to production
+
+// if (process.env.NODE_ENV === 'production') {
+//   //  set static folder
+//   app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+//   // any route that is not api will be redirected to index.html
+//   app.get('*', (req, res) => 
+//   res.sendFile(path.resolve(__dirname, 'frontend', 'build' , 'index.html')))
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running...");
+//   });
+// }
+// comment until here
+
+
 ```
+
 ### Install dependencies
 ```sh
 npm install
-```
-### Start the development server
-```sh
+
 npm start
-```
+
+### Navigate to the project frontend directory:
+cd frontend
+
+npm i 
+npm start
+
+
 
 ## 💡 How to Contribute
 Feel free to fork the repository and submit a pull request with your improvements!
