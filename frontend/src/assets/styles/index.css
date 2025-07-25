@@ -707,4 +707,92 @@ a {
   font-size: 2rem;;
 }
 
+/* progress bar *//* progress bar */
+/* Container da barra de progresso */
+.workout-progress-bar-container {
+  width: 100%;
+  padding: 15px 0;
+  /* Removed: overflow-x: auto; white-space: nowrap; from here */
+}
 
+/* Garante que a linha de itens possa rolar e permanecer em uma linha no desktop e na maioria dos celulares */
+.workout-progress-bar-container .row > .col {
+  display: flex;
+  justify-content: center; /* Centraliza os itens na linha */
+  flex-wrap: nowrap; /* FORÇA os itens a permanecerem em uma única linha */
+  overflow-x: auto; /* Adicionado aqui para o scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* Melhora o scroll em dispositivos iOS */
+  padding-bottom: 5px; /* Adiciona um pequeno padding para evitar que a barra de scroll cubra o conteúdo */
+  /* Adicionei um pouco de padding lateral para não colar nas bordas, se desejar */
+  padding-left: 10px; 
+  padding-right: 10px;
+}
+
+
+/* Item individual na barra de progresso */
+.workout-progress-item {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  margin: 0 5px; /* Espaçamento horizontal entre os blocos */
+  min-width: 60px; /* Largura mínima para os blocos */
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0; /* Impede que os itens encolham abaixo do min-width */
+  /* Removido flex-grow: 0; para permitir que cresçam um pouco se houver espaço e ficarem mais distribuídos */
+  flex-grow: 1; /* Permite que os itens cresçam para preencher o espaço disponível, mas dentro do min-width */
+  max-width: 120px; /* Define uma largura máxima para cada item, para que não fiquem gigantes em telas muito largas */
+  border-radius: 5px; /* Cantos levemente arredondados */
+  cursor: help; /* Indica que há um tooltip */
+  white-space: nowrap; /* Impede a quebra de linha do texto dentro do item */
+  overflow: hidden; /* Garante que o texto excedente seja escondido */
+  text-overflow: ellipsis; /* Adiciona "..." ao texto se ele for cortado */
+}
+
+/* Estilo para treinos já concluídos (verde escuro como na imagem) */
+.workout-progress-item.completed-past {
+  background-color: #5cb85c; /* Um verde um pouco mais escuro para "feito" */
+  color: white;
+  border-color: #4cae4c;
+}
+
+/* Estilo para o treino atual (verde claro / destaque como na imagem) */
+.workout-progress-item.current-active {
+  background-color: #a4e1a4; /* Verde mais claro para o ativo */
+  color: #333; /* Texto escuro para contraste */
+  border-color: #7ab77a; /* Borda um pouco mais escura */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Sutil sombra para destaque */
+}
+
+/* Estilo para treinos futuros (branco/padrão) */
+.workout-progress-item.pending-future {
+  background-color: white;
+  color: #333;
+  border-color: #ccc;
+}
+
+/* --- AJUSTES PARA O BOTÃO --- */
+.button-training-done {
+    max-width: 300px; /* Define uma largura máxima para o botão */
+    width: 100%; /* Garante que ele ocupe 100% do espaço disponível até o max-width */
+    margin-left: auto; /* Centraliza o botão */
+    margin-right: auto; /* Centraliza o botão */
+    display: block; /* Garante que as margens auto funcionem */
+}
+
+
+/* Regras para telas pequenas para melhor responsividade */
+
+/* Remover a media query de 767px que estava redefinindo o flex-wrap */
+/* A regra padrão do .workout-progress-bar-container .row > .col já forçará o nowrap */
+
+/* Apenas em telas MUITO pequenas (celulares pequenos, abaixo de 480px) os itens devem quebrar */
+
+
+/* Opcional: Para telas ainda menores, se 2 itens por linha for muito apertado */
+@media (max-width: 320px) {
+    .workout-progress-item {
+        flex-basis: calc(100% - 10px); /* 1 item por linha */
+    }
+}
