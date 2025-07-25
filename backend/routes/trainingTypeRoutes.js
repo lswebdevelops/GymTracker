@@ -6,8 +6,7 @@ import {
   createTrainingType,
   updateTrainingType,
   deleteTrainingType,
-  createTrainingTypeReview,
-  getTopTrainingTypes,
+ 
 } from "../controllers/trainingTypeController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 import checkObjectId from "../middleware/checkObjectId.js";
@@ -18,9 +17,8 @@ router
   .post(protect, admin, createTrainingType);
 router
   .route("/:id/reviews")
-  .post(protect, checkObjectId, createTrainingTypeReview);
+  .post(protect, checkObjectId, );
 
-router.get("/top", getTopTrainingTypes);
 
 router
   .route("/:id")

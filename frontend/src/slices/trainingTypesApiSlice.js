@@ -36,14 +36,6 @@ export const TrainingTypesApiSlice = apiSlice.injectEndpoints({
         body: updatedTrainingType,
       }),
     }),
-    
-    uploadTrainingTypeImage: builder.mutation({
-      query: (data) => ({
-        url: `${UPLOAD_URL}`,
-        method: "POST",
-        body: data,
-      }),
-    }),
     deleteTrainingType: builder.mutation({
       query: (TrainingTypeId) => ({
         url: `${TRAININGTYPES_URL}/${TrainingTypeId}`,
@@ -57,13 +49,7 @@ export const TrainingTypesApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["TrainingType"],
-    }),
-    getTopTrainingTypes: builder.query({
-      query: () => ({
-        url: `${TRAININGTYPES_URL}/top`,
-      }),
-      keepUnusedDataFor: 5,
-    }),
+    }),    
   }),
 });
 
@@ -71,9 +57,7 @@ export const {
   useGetTrainingTypesQuery,
   useGetTrainingTypeDetailsQuery,
   useCreateTrainingTypeMutation,
-  useUpdateTrainingTypeMutation,
-  useUploadTrainingTypeImageMutation,
+  useUpdateTrainingTypeMutation,  
   useDeleteTrainingTypeMutation,
   useCreateReviewMutation,
-  useGetTopTrainingTypesQuery,
 } = TrainingTypesApiSlice;

@@ -44,13 +44,8 @@ const getTrainingTypeById = asyncHandler(async (req, res) => {
 const createTrainingType = asyncHandler(async (req, res) => {
   const trainingType = new TrainingType({
     name: "-",
-    price: 0,
-    user: req.user._id,
-    image: "/images/samplebook2.png",
-    brand: "Z",
+    user: req.user._id,   
     category: "grupo muscular",
-    countInStock: 0,
-    numReviews: 0,
     description: `Adicionar séries erepetições`,
   });
 
@@ -63,19 +58,14 @@ const createTrainingType = asyncHandler(async (req, res) => {
 // @access private admin
 
 const updateTrainingType = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+  const { name, description, category } = req.body;
 
   const trainingType = await TrainingType.findById(req.params.id);
 
   if (trainingType) {
     trainingType.name = name;
-    trainingType.price = price;
-    trainingType.description = description;
-    trainingType.image = image;
-    trainingType.brand = brand;
+    trainingType.description = description;    
     trainingType.category = category;
-    trainingType.countInStock = countInStock;
 
     const updatedTrainingType = await trainingType.save();
     res.json(updatedTrainingType);
@@ -97,67 +87,22 @@ const deleteTrainingType = asyncHandler(async (req, res) => {
     await trainingType.deleteOne();
     // Remove todos os workouts que referenciam esse treino
     await Workout.deleteMany({ trainingType: trainingType._id });
-    res.status(200).json({ message: "Treino deletado e removido dos workouts dos usuários" });
+    res
+      .status(200)
+      .json({
+        message: "Treino deletado e removido dos workouts dos usuários",
+      });
   } else {
     res.status(404);
     throw new Error("Recurso não encontrado");
   }
 });
 
-// @desc create a new review
-// @route post  /api/trainingTypes/:id/reviews
-// @access private
 
-const createTrainingTypeReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
-  const trainingType = await TrainingType.findById(req.params.id);
-
-  if (trainingType) {
-    const alreadyReviewed = trainingType.reviews.find(
-      (review) => review.user.toString() === req.user._id.toString()
-    );
-
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error("Obra já avaliada.");
-    }
-    const review = {
-      name: req.user.name,
-      rating: Number(rating),
-      comment,
-      user: req.user._id,
-    };
-
-    trainingType.reviews.push(review);
-
-    trainingType.numReviews = trainingType.reviews.length;
-
-    trainingType.rating =
-      trainingType.reviews.reduce((acc, review) => acc + review.rating, 0) /
-      trainingType.reviews.length;
-
-    await trainingType.save();
-    res.status(201).json({ message: "Avaliação adicionada" });
-  } else {
-    res.status(404);
-    throw new Error("Recurso não encontrado");
-  }
-});
-
-// @desc get top rated trainingType
-// @route get /api/trainingTypes/top
-// @access Public
-
-const getTopTrainingTypes = asyncHandler(async (req, res) => {
-  const trainingTypes = await TrainingType.find({}).sort({ rating: -1 }).limit(3);
-  res.status(200).json(trainingTypes);
-});
 export {
   getTrainingTypes,
   getTrainingTypeById,
   createTrainingType,
   updateTrainingType,
-  deleteTrainingType,
-  createTrainingTypeReview,
-  getTopTrainingTypes,
+  deleteTrainingType,  
 };

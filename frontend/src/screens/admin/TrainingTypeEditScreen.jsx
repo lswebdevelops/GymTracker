@@ -8,18 +8,14 @@ import { toast } from "react-toastify";
 import {
   useUpdateTrainingTypeMutation,
   useGetTrainingTypeDetailsQuery,
-  useUploadTrainingTypeImageMutation,
+ 
 } from "../../slices/trainingTypesApiSlice";
 
 const TrainingTypeEditScreen = () => {
   const { id: trainingTypeId } = useParams();
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
-  const [brand, setBrand] = useState("");
+  const [name, setName] = useState("");   
   const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
   const {
@@ -31,37 +27,28 @@ const TrainingTypeEditScreen = () => {
   const [updateTrainingType, { isLoading: loadingUpdate }] =
     useUpdateTrainingTypeMutation();
 
-  const [uploadTrainingTypeImage] = useUploadTrainingTypeImageMutation();
+  
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (trainingType) {
-      setName(trainingType.name);
-      setPrice(trainingType.price);
-      setImage(trainingType.image);
-      setBrand(trainingType.brand);
+      setName(trainingType.name);     
       setCategory(trainingType.category);
-      setCountInStock(trainingType.countInStock);
       setDescription(trainingType.description);
     }
   }, [trainingType]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     if (!trainingTypeId) {
       toast.error("Erro: ID do treino não encontrado!");
       return;
     }
 
     const updatedTrainingType = {
-      name,
-      price,
-      image,
-      brand,
+      name,      
       category,
-      countInStock,
       description,
     };
 
@@ -84,20 +71,7 @@ const TrainingTypeEditScreen = () => {
     }
   };
 
-  const uploadFileHandler = async (e) => {
-    const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    try {
-      const res = await uploadTrainingTypeImage(formData).unwrap();
-      toast.success(res.message);
-
-      // Normalize the path to always use forward slashes
-      const imageUrl = res.image.replace(/\\/g, "/");
-      setImage(imageUrl); // Set the normalized image URL
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+ 
 
   return (
     <>
@@ -186,7 +160,6 @@ const TrainingTypeEditScreen = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
-
                   <Button type="submit" variant="primary" className="my-2">
                     Salvar
                   </Button>
@@ -202,18 +175,17 @@ const TrainingTypeEditScreen = () => {
             <h4>Como Organizar os Treinos</h4>
             <p>
               Os treinos são organizados por letras, cada uma representando um
-              grupo muscular específico: 
+              grupo muscular específico:
               <li>- A: Pernas </li>
               <li>- B: Costas </li>
               <li>- C: Bíceps </li>
-              <li>- D: Tríceps</li> 
+              <li>- D: Tríceps</li>
               <li>- E: Peito </li>
               <li>- F: Funcional</li>
             </p>
             <p>
               Os treinos devem ser montados combinando letras diferentes, mas
-              mantendo a mesma numeração. 
-              <hr />
+              mantendo a mesma numeração.              
               Exemplos:
             </p>
             <ul>

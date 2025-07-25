@@ -29,26 +29,26 @@ const HomeScreen = () => {
     }
   }, [myWorkout]);
 
- const handleWorkoutDone = async (id) => {
-  console.log('Botão "Próximo Treino" clicado! ID do treino:', id);
-  try {
-    const result = await updateWorkout({
-      id,
-      workoutData: { status: "completed" },
-    }).unwrap();
-    console.log('Resultado da mutation updateWorkout:', result); // Adicione esta linha
+  const handleWorkoutDone = async (id) => {
+    console.log('Botão "Próximo Treino" clicado! ID do treino:', id);
+    try {
+      const result = await updateWorkout({
+        id,
+        workoutData: { status: "completed" },
+      }).unwrap();
+      console.log('Resultado da mutation updateWorkout:', result);
 
-    const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
-    setCurrentWorkoutIndex(newIndex);
-    localStorage.setItem("currentWorkoutIndex", newIndex); // Save in localStorage
+      const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
+      setCurrentWorkoutIndex(newIndex);
+      localStorage.setItem("currentWorkoutIndex", newIndex);
 
-    setTimeout(() => {
-      refetch();
-    }, 500);
-  } catch (error) {
-    console.error("Erro ao marcar treino como feito:", error);
-  }
-};
+      setTimeout(() => {
+        refetch();
+      }, 500);
+    } catch (error) {
+      console.error("Erro ao marcar treino como feito:", error);
+    }
+  };
 
   if (isLoading) return <Loader />;
   if (error)
@@ -56,7 +56,10 @@ const HomeScreen = () => {
       <Message variant="danger">{error?.data?.message || error.error}</Message>
     );
 
-  const workoutOfTheDay = workoutsArray[currentWorkoutIndex] || null;
+  const workoutOfTheDay =
+    workoutsArray.length > 0 && currentWorkoutIndex < workoutsArray.length
+      ? workoutsArray[currentWorkoutIndex]
+      : null;
 
   return (
     <Container className="trainingTypeHomeScreenContainer text-center py-4">
@@ -68,7 +71,7 @@ const HomeScreen = () => {
         </Link>
       )}
 
-      {workoutsArray.length > 0 ? (
+      {workoutOfTheDay ? (
         <>
           <Row className="justify-content-center box-training-day">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>

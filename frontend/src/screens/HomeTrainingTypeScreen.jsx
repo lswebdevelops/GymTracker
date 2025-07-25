@@ -12,8 +12,7 @@ import Message from "../components/Message";
 
 const HomeTrainingTypeScreen = () => {
   const { id: trainingTypeId } = useParams();
-  const navigate = useNavigate();
-  const [rating, setRating] = useState(0);
+  const navigate = useNavigate(); 
   const [comment, setComment] = useState("");
 
   const {
@@ -36,8 +35,7 @@ const HomeTrainingTypeScreen = () => {
         trainingTypeId: trainingType._id,
         name: trainingType.name,
         category: trainingType.category,
-        description: trainingType.description,
-        image: trainingType.image,
+        description: trainingType.description,        
       }).unwrap();
       toast.success("Added to MyWorkout!");
     } catch (err) {
@@ -53,8 +51,7 @@ const HomeTrainingTypeScreen = () => {
     e.preventDefault();
     try {
       await createReview({
-        trainingTypeId,
-        rating,
+        trainingTypeId,      
         comment,
       }).unwrap();
       refetch();
