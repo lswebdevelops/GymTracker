@@ -36,7 +36,7 @@ const MyTrainingScreen = () => {
 
   return (
     <>
-      <h2 className="text-center mb-4">My Training</h2>
+      <h2 className="text-center mb-4">Editar meus Treinos</h2>
       {workouts && workouts.length > 0 ? (
         <Row>
           {workouts.map((workout, index) => {

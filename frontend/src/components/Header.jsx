@@ -52,14 +52,6 @@ const Header = () => {
               <span className="ms-2 d-none d-lg-inline">Gym Tracker</span>
             </Nav.Link>
 
-            <Nav.Link
-              as={Link}
-              to="/trainingTypes"
-              className="d-flex align-items-center me-3"
-            >
-              <FaWeightHanging size={20} className="d-lg-none" />
-              <span className="ms-2 d-none d-lg-inline">Treinos</span>
-            </Nav.Link>
             {userInfo && (
               <Nav.Link
                 as={Link}
@@ -67,17 +59,26 @@ const Header = () => {
                 className="d-flex align-items-center me-3"
               >
                 <FaDumbbell size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">Meu Treino</span>
+                <span className="ms-2 d-none d-lg-inline">
+                  Editar Meu Treino
+                </span>
               </Nav.Link>
             )}
-
+            <Nav.Link
+              as={Link}
+              to="/trainingTypes"
+              className="d-flex align-items-center me-3"
+            >
+              <FaWeightHanging size={20} className="d-lg-none" />
+              <span className="ms-2 d-none d-lg-inline">Todos os Treinos</span>
+            </Nav.Link>
             <Nav.Link
               as={Link}
               to="/blogs"
               className="d-flex align-items-center"
             >
               <FaNewspaper size={27} className="d-lg-none" />
-              <span className="ms-2 d-none d-lg-inline">Blog</span>
+              <span className="ms-2 d-none d-lg-inline">Blogue</span>
             </Nav.Link>
             <Nav.Link
               as={Link}
@@ -85,7 +86,7 @@ const Header = () => {
               className="d-flex align-items-center"
             >
               <FaUserAlt size={20} className="d-lg-none  icon-bio-header" />
-              <span className="ms-2 d-none d-lg-inline">Sobre a GT</span>
+              <span className="ms-2 d-none d-lg-inline">Sobre o App</span>
             </Nav.Link>
           </Nav>
 
@@ -93,8 +94,6 @@ const Header = () => {
 
           <Navbar.Collapse id="user-navbar-collapse">
             <Nav className="ms-auto">
-              
-
               {/* User Dropdown */}
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">

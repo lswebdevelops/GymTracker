@@ -702,3 +702,7 @@ a {
 
 
 
+.red_home_message {
+  color: red;
+  font-size: 2rem;;
+}

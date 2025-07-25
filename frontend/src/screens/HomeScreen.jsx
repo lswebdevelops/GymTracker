@@ -9,11 +9,16 @@ import { Link } from "react-router-dom";
 import TrainingType from "../components/TrainingType";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import image_logout from "../assets/image_logout.png";
 
 const HomeScreen = () => {
   const { keyword } = useParams();
-  const { data: myWorkout, isLoading, error, refetch } =
-    useGetMyWorkoutDetailsQuery();
+  const {
+    data: myWorkout,
+    isLoading,
+    error,
+    refetch,
+  } = useGetMyWorkoutDetailsQuery();
   const [updateWorkout] = useUpdateMyWorkoutMutation();
 
   const [workoutsArray, setWorkoutsArray] = useState([]);
@@ -36,7 +41,7 @@ const HomeScreen = () => {
         id,
         workoutData: { status: "completed" },
       }).unwrap();
-      console.log('Resultado da mutation updateWorkout:', result);
+      console.log("Resultado da mutation updateWorkout:", result);
 
       const newIndex = (currentWorkoutIndex + 1) % workoutsArray.length;
       setCurrentWorkoutIndex(newIndex);
@@ -89,7 +94,17 @@ const HomeScreen = () => {
       ) : (
         <>
           <Message variant="info">Nenhum treino encontrado.</Message>
-          <p className="mt-3">Adicione novos treinos para começar!</p>
+          <p className="mt-3">Você ainda não adicionou nenhum treino.</p>
+          <p className="red_home_message">
+            Se adicionou ou removeu treinos recentemente e eles não aparecem,
+            tente entrar novamente (deslogar e logar).
+          </p>
+          <p>Click em seu nome e sair:</p>
+          <img
+            src={image_logout}
+            alt="logout image"
+            className="img-fluid mt-3"
+          />
         </>
       )}
     </Container>
