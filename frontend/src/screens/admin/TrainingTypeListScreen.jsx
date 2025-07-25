@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Table, Button, Row, Col } from "react-bootstrap";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { Table, Button, Row, Col, Badge, Collapse } from "react-bootstrap";
+import { FaEdit, FaTrash, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import Paginate from "../../components/Paginate";
@@ -11,7 +12,7 @@ import {
   useDeleteTrainingTypeMutation,
 } from "../../slices/trainingTypesApiSlice";
 import { toast } from "react-toastify";
-
+import { TRAINING_CODE_TO_MUSCLE_GROUP } from "../../utils/constants.js";
 const TrainingTypeListScreen = () => {
   const { pageNumber } = useParams();
   const { data, isLoading, error, refetch } = useGetTrainingTypesQuery({
@@ -24,11 +25,20 @@ const TrainingTypeListScreen = () => {
   const [deleteTrainingType, { isLoading: loadingDelete }] =
     useDeleteTrainingTypeMutation();
 
+  const [expandedRows, setExpandedRows] = useState({});
+
+  const toggleRowExpansion = (id) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Tem certeza que deseja deletar este treino?")) {
       try {
         await deleteTrainingType(id);
-        toast.success("Training Type deleted");
+        toast.success("Treino deletado com sucesso");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -37,16 +47,36 @@ const TrainingTypeListScreen = () => {
   };
 
   const createTrainingTypeHandler = async () => {
-    if (!window.confirm("Tem certeza de que deseja criar um novo livro?")) {
+    if (!window.confirm("Tem certeza de que deseja criar um novo treino?")) {
       return;
     }
     try {
       await createTrainingType();
       refetch();
+      toast.success("Treino criado! Agora você pode editá-lo.");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  const formatExercises = (description) => {
+    if (!description || description === "Adicionar séries erepetições") {
+      return [];
+    }
+    return description.split("\n").filter((ex) => ex.trim() !== "");
+  };
+
+  const getExerciseCount = (description) => {
+    return formatExercises(description).length;
+  };
+
+  // Função para obter o grupo muscular correto
+  const getMuscleGroup = (trainingType) => {
+    return (
+      TRAINING_CODE_TO_MUSCLE_GROUP[trainingType.name] || trainingType.category
+    );
+  };
+
   return (
     <>
       <Row className="align-items-center">
@@ -76,261 +106,169 @@ const TrainingTypeListScreen = () => {
                 <th>Código</th>
                 <th>Nome Treino</th>
                 <th>Categoria</th>
-                <th></th>
+                <th>Exercícios</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {data.trainingTypes.map((trainingType) => (
-                <tr key={trainingType._id}>
-                  <td>{trainingType._id}</td>
-                  <td>{trainingType.name}</td>
-                  <td>{trainingType.category}</td>
-                  <td>
-                    <Link to={`/admin/trainingType/${trainingType._id}/edit`}>
-                      <Button variant="light" className="btn-sm mx-2">
-                        <FaEdit />
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(trainingType._id)}
-                    >
-                      <FaTrash style={{ color: "white" }} />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              {data.trainingTypes.map((trainingType) => {
+                const exerciseCount = getExerciseCount(
+                  trainingType.description
+                );
+                const exercises = formatExercises(trainingType.description);
+                const isExpanded = expandedRows[trainingType._id];
+                const muscleGroup = getMuscleGroup(trainingType);
+
+                return (
+                  <>
+                    <tr key={trainingType._id}>
+                      <td>
+                        <small className="text-muted">
+                          {trainingType._id.slice(-6)}
+                        </small>
+                      </td>
+                      <td>
+                        <Badge
+                          bg={
+                            trainingType.name.charAt(0) === "A"
+                              ? "primary"
+                              : trainingType.name.charAt(0) === "B"
+                              ? "success"
+                              : trainingType.name.charAt(0) === "C"
+                              ? "warning"
+                              : trainingType.name.charAt(0) === "D"
+                              ? "danger"
+                              : trainingType.name.charAt(0) === "E"
+                              ? "info"
+                              : "dark"
+                          }
+                          className="me-2"
+                        >
+                          {trainingType.name}
+                        </Badge>
+                      </td>
+                      <td>{muscleGroup}</td>
+                      <td>
+                        <div className="d-flex align-items-center">
+                          <Badge
+                            bg={exerciseCount === 0 ? "danger" : "success"}
+                          >
+                            {exerciseCount}
+                          </Badge>
+
+                          {exerciseCount > 0 && (
+                            <Button
+                              variant="link"
+                              size="sm"
+                              onClick={() =>
+                                toggleRowExpansion(trainingType._id)
+                              }
+                              className="p-0"
+                            >
+                              {isExpanded ? <FaEyeSlash /> : <FaEye />}
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <Link
+                          to={`/admin/trainingType/${trainingType._id}/edit`}
+                        >
+                          <Button variant="light" className="btn-sm mx-1">
+                            <FaEdit />
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="danger"
+                          className="btn-sm mx-1"
+                          onClick={() => deleteHandler(trainingType._id)}
+                        >
+                          <FaTrash style={{ color: "white" }} />
+                        </Button>
+                      </td>
+                    </tr>
+
+                    {/* Linha expandida com exercícios */}
+                    {exercises.length > 0 && (
+                      <tr>
+                        <td colSpan="5" className="p-0">
+                          <Collapse in={isExpanded}>
+                            <div className="bg-light p-3 border-top">
+                              <h6 className="mb-2">
+                                Exercícios do Treino {trainingType.name}:
+                              </h6>
+                              <Row>
+                                {exercises.map((exercise, index) => (
+                                  <Col md={6} key={index} className="mb-2">
+                                    <div className="d-flex align-items-start">
+                                      <Badge
+                                        bg="outline-primary"
+                                        className="me-2 mt-1"
+                                      >
+                                        {index + 1}
+                                      </Badge>
+                                      <small>{exercise}</small>
+                                    </div>
+                                  </Col>
+                                ))}
+                              </Row>
+                            </div>
+                          </Collapse>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                );
+              })}
             </tbody>
           </Table>
-          <div>
-            <h2>Exemplos de Treinos</h2>
-            <ul>
-              <li>
-                <h3>Treino de Perna (Lower Body Strength & Hypertrophy)</h3>
-                <ul>
-                  <li>
-                    <h4>Treino A1 - Hipertrofia</h4>
-                    <ol>
-                      <li>Agachamento Livre – 4x 8-12</li>
-                      <li>Leg Press – 3x 10-12</li>
-                      <li>Afundo com Halteres – 3x 10 (cada perna)</li>
-                      <li>Stiff com Barra – 3x 10-12</li>
-                      <li>Cadeira Extensora – 3x 12-15</li>
-                      <li>Panturrilha no Smith – 3x 15-20</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino A2 - Força</h4>
-                    <ol>
-                      <li>Agachamento Livre – 5x 5</li>
-                      <li>Levantamento Terra – 4x 5-8</li>
-                      <li>Passada com Barra – 3x 8 (cada perna)</li>
-                      <li>Cadeira Flexora – 3x 10-12</li>
-                      <li>Panturrilha no Leg Press – 4x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino A3 - Resistência</h4>
-                    <ol>
-                      <li>Agachamento Búlgaro – 3x 15</li>
-                      <li>Avanço Alternado – 3x 12 (cada perna)</li>
-                      <li>Stiff com Halteres – 3x 12-15</li>
-                      <li>Elevação de Panturrilha Unilateral – 3x 15-20</li>
-                      <li>Agachamento com Salto – 3x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino A4 - Foco em Glúteos e Posteriores</h4>
-                    <ol>
-                      <li>Levantamento Terra Romeno – 4x 10</li>
-                      <li>Agachamento Sumo – 3x 12</li>
-                      <li>Cadeira Flexora – 3x 12-15</li>
-                      <li>Glúteo na Polia – 3x 12</li>
-                      <li>Elevação Pélvica com Barra – 3x 10-12</li>
-                    </ol>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <hr />
-                <h3>Treino de Braço (Bíceps e Tríceps)</h3>
-                <ul>
-                  <li>
-                    <h4>Treino B1 - Hipertrofia</h4>
-                    <ol>
-                      <li>Rosca Direta com Barra – 4x 8-12</li>
-                      <li>Rosca Martelo – 3x 10-12</li>
-                      <li>Rosca Concentrada – 3x 12</li>
-                      <li>Tríceps Corda no Pulley – 3x 12-15</li>
-                      <li>Tríceps Francês – 3x 10-12</li>
-                      <li>Fundos em Paralelas – 3x 8-12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino B2 - Força</h4>
-                    <ol>
-                      <li>Rosca Direta com Barra – 5x 5-8</li>
-                      <li>Rosca Alternada com Halteres – 4x 10</li>
-                      <li>Tríceps Testa – 4x 8-10</li>
-                      <li>Paralelas com Peso – 3x 6-8</li>
-                      <li>Rosca Martelo com Corda – 3x 10-12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino B3 - Resistência</h4>
-                    <ol>
-                      <li>Rosca Scott – 3x 12-15</li>
-                      <li>Rosca Inversa – 3x 12-15</li>
-                      <li>Tríceps Mergulho no Banco – 3x 15-20</li>
-                      <li>Tríceps Pulley com Pegada Invertida – 3x 12-15</li>
-                      <li>Rosca 21 – 3 séries</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino B4 - Bomba Final</h4>
-                    <ol>
-                      <li>Rosca Direta + Rosca Martelo – 3x 10</li>
-                      <li>Tríceps Corda + Tríceps Testa – 3x 10-12</li>
-                      <li>Rosca Alternada + Rosca Concentrada – 3x 10</li>
-                      <li>Fundos em Paralelas – 3 séries até a falha</li>
-                    </ol>
-                  </li>
-                </ul>
-                <hr />
-                <h3>Treino de Costas</h3>
-                <ul>
-                  <li>
-                    <h4>Treino C1 - Hipertrofia</h4>
-                    <ol>
-                      <li>Puxada Frontal – 4x 8-12</li>
-                      <li>Remada Curvada – 4x 10</li>
-                      <li>Remada Unilateral – 3x 10</li>
-                      <li>Pulldown na Polia – 3x 12</li>
-                      <li>Levantamento Terra – 3x 8-10</li>
-                      <li>Encolhimento de Ombros – 3x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino C2 - Força</h4>
-                    <ol>
-                      <li>Barra Fixa – 5x 6-8</li>
-                      <li>Remada Cavalinho – 4x 8</li>
-                      <li>Levantamento Terra – 4x 5</li>
-                      <li>Remada Baixa na Polia – 3x 10</li>
-                      <li>Face Pull – 3x 12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino C3 - Resistência</h4>
-                    <ol>
-                      <li>Puxada Pegada Fechada – 3x 12-15</li>
-                      <li>Pullover com Halter – 3x 12-15</li>
-                      <li>Remada com Halteres – 3x 12</li>
-                      <li>Hiperextensão Lombar – 3x 15-20</li>
-                      <li>Encolhimento com Halteres – 3x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino C4 - Misto</h4>
-                    <ol>
-                      <li>Puxada Pegada Aberta – 4x 10</li>
-                      <li>Remada Baixa – 3x 12</li>
-                      <li>Remada com Halter – 3x 10</li>
-                      <li>Levantamento Terra Romeno – 3x 8</li>
-                      <li>Face Pull – 3x 12</li>
-                    </ol>
-                  </li>
-                </ul>
-                <hr />
-                <h3>Treino de Peito</h3>
-                <ul>
-                  <li>
-                    <h4>Treino D1 - Hipertrofia</h4>
-                    <ol>
-                      <li>Supino Reto com Barra – 4x 8-12</li>
-                      <li>Supino Inclinado com Halteres – 3x 10-12</li>
-                      <li>Crucifixo com Halteres – 3x 12</li>
-                      <li>Crossover – 3x 12-15</li>
-                      <li>Flexões – 3 séries até a falha</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino D2 - Força</h4>
-                    <ol>
-                      <li>Supino Reto com Barra – 5x 5</li>
-                      <li>Supino Fechado – 4x 8</li>
-                      <li>Paralelas com Peso – 3x 6-8</li>
-                      <li>Supino com Pegada Invertida – 3x 10</li>
-                      <li>Flexão Diamante – 3x 12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino D3 - Resistência</h4>
-                    <ol>
-                      <li>Supino com Halteres – 3x 12-15</li>
-                      <li>Crossover na Polia Alta – 3x 12-15</li>
-                      <li>Crucifixo Inclinado – 3x 15</li>
-                      <li>Flexão de Braço – 3 séries até a falha</li>
-                      <li>Paralelas – 3x 12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino D4 - Pump Total</h4>
-                    <ol>
-                      <li>Supino Reto + Crossover – 3x 10</li>
-                      <li>Supino Inclinado + Flexões – 3x 10-12</li>
-                      <li>Paralelas + Crucifixo – 3x 12</li>
-                      <li>Flexão até a falha</li>
-                    </ol>
-                  </li>
-                </ul>
 
-                <ul>
-                  <li>
-                    <h4>Treino E1 - Hipertrofia</h4>
-                    <ol>
-                      <li>Puxada Frontal – 4x 8-12</li>
-                      <li>Remada Curvada – 4x 10</li>
-                      <li>Remada Unilateral – 3x 10</li>
-                      <li>Pulldown na Polia – 3x 12</li>
-                      <li>Levantamento Terra – 3x 8-10</li>
-                      <li>Encolhimento de Ombros – 3x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino E2 - Força</h4>
-                    <ol>
-                      <li>Barra Fixa – 5x 6-8</li>
-                      <li>Remada Cavalinho – 4x 8</li>
-                      <li>Levantamento Terra – 4x 5</li>
-                      <li>Remada Baixa na Polia – 3x 10</li>
-                      <li>Face Pull – 3x 12</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino E3 - Resistência</h4>
-                    <ol>
-                      <li>Puxada Pegada Fechada – 3x 12-15</li>
-                      <li>Pullover com Halter – 3x 12-15</li>
-                      <li>Remada com Halteres – 3x 12</li>
-                      <li>Hiperextensão Lombar – 3x 15-20</li>
-                      <li>Encolhimento com Halteres – 3x 15</li>
-                    </ol>
-                  </li>
-                  <li>
-                    <h4>Treino E4 - Misto</h4>
-                    <ol>
-                      <li>Puxada Pegada Aberta – 4x 10</li>
-                      <li>Remada Baixa – 3x 12</li>
-                      <li>Remada com Halter – 3x 10</li>
-                      <li>Levantamento Terra Romeno – 3x 8</li>
-                      <li>Face Pull – 3x 12</li>
-                    </ol>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+          {/* Seção de exemplos (mantida para referência) */}
+          <div className="mt-4">
+            <h3>Sistema de Organização</h3>
+            <Row>
+              <Col md={6}>
+                <div className="p-3 bg-light rounded">
+                  <h5>Grupos Musculares</h5>
+                  <ul className="list-unstyled">
+                    <li>
+                      <Badge bg="primary">A</Badge> Pernas
+                    </li>
+                    <li>
+                      <Badge bg="success">B</Badge> Costas
+                    </li>
+                    <li>
+                      <Badge bg="warning">C</Badge> Bíceps
+                    </li>
+                    <li>
+                      <Badge bg="danger">D</Badge> Tríceps
+                    </li>
+                    <li>
+                      <Badge bg="info">E</Badge> Peito
+                    </li>
+                    <li>
+                      <Badge bg="dark">F</Badge> Funcional
+                    </li>
+                  </ul>
+                </div>
+              </Col>
+              <Col md={6}>
+                <div className="p-3 bg-light rounded">
+                  <h5>Como Funciona</h5>
+                  <p className="mb-2">
+                    <strong>Numeração:</strong> Combine diferentes grupos
+                    musculares mantendo o mesmo número.
+                  </p>
+                  <p className="mb-2">
+                    <strong>Exemplo 1:</strong> A1 + B1 + C1 = Treino completo
+                  </p>
+                  <p className="mb-0">
+                    <strong>Exemplo 2:</strong> A2 + D2 + E2 = Outro treino
+                    completo
+                  </p>
+                </div>
+              </Col>
+            </Row>
           </div>
         </>
       )}

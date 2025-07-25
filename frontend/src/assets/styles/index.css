@@ -201,7 +201,7 @@ main > * {
 .trainingTypesPageH1 {
   text-align: center;
   font-size: 3rem;
-  margin: 50px;
+  margin: 10px;
 }
 .poemContainer {
   min-height: 250px;
@@ -706,3 +706,5 @@ a {
   color: red;
   font-size: 2rem;;
 }
+
+

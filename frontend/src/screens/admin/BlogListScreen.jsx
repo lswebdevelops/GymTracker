@@ -4,13 +4,10 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import Paginate from "../../components/Paginate";
+
 import {
-  useUpdateBlogMutation,
-  useGetBlogDetailsQuery,
   useGetBlogsQuery,
-  useCreateBlogMutation,
-  useUploadBlogImageMutation,
+  useCreateBlogMutation,  
   useDeleteBlogMutation,
 } from "../../slices/blogsApiSlice";
 import { toast } from "react-toastify";
@@ -38,7 +35,7 @@ const BlogListScreen = () => {
   };
 
   const createBlogHandler = async () => {
-    if (!window.confirm("Tem certeza de que deseja criar um novo blog?")) {
+    if (!window.confirm("Tem certeza de que deseja  um novo blog?")) {
       return;
     }
     try {

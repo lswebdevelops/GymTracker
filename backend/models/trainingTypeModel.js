@@ -5,7 +5,7 @@ const reviewSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
-    },   
+    },
     comment: {
       type: String,
       required: true,
@@ -39,6 +39,7 @@ const trainingTypeSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+      default: "",
     },
   },
   {

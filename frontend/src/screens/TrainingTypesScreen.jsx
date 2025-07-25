@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Badge } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import { useGetTrainingTypesQuery } from "../slices/trainingTypesApiSlice";
 import { useCreateMyWorkoutMutation } from "../slices/myTrainingApiSlice";
@@ -59,6 +59,40 @@ const TrainingTypeScreen = () => {
         ) : (
           <>
             <h1 className="trainingTypesPageH1">Treinos</h1>
+            {/* Seção de exemplos (mantida para referência) */}
+            <div className="mt-4">
+              <h3>Exemplos de treinos:</h3>              
+              <p>Treino 1: A1, B1, C1, D1, E1, F1 </p>
+              <p>Treino 2: A2, B2, C2, D2, E2 </p>
+
+              <Row>
+                <Col>
+                  <div className="p-3 bg-light rounded">
+                    <h5>Grupos Musculares</h5>
+                    <ul className="list-unstyled d-flex flex-wrap gap-3 align-items-center m-0">
+                      <li>
+                        <Badge bg="primary">A</Badge> Pernas
+                      </li>
+                      <li>
+                        <Badge bg="success">B</Badge> Costas
+                      </li>
+                      <li>
+                        <Badge bg="warning text-dark">C</Badge> Bíceps
+                      </li>
+                      <li>
+                        <Badge bg="danger">D</Badge> Tríceps
+                      </li>
+                      <li>
+                        <Badge bg="info text-dark">E</Badge> Peito
+                      </li>
+                      <li>
+                        <Badge bg="dark">F</Badge> Funcional
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+              </Row>
+            </div>
 
             {/* Filtro de ordenação */}
             <Form.Group controlId="filterOrder" className="mb-3">

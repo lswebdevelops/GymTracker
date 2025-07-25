@@ -1,7 +1,13 @@
-import { Container, Row,Nav, Col } from "react-bootstrap";
+import { Container, Row, Nav, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaArrowUp } from "react-icons/fa";
-import { FaHome,FaWeightHanging,FaDumbbell, FaNewspaper, FaUserAlt } from "react-icons/fa";
+import {
+  FaHome,
+  FaWeightHanging,
+  FaDumbbell,
+  FaNewspaper,
+  FaUserAlt,
+} from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const Footer = () => {
@@ -19,24 +25,29 @@ const Footer = () => {
                 <span className="ms-2 d-none d-lg-inline">Gym Tracker</span>
               </Link>
 
+              {userInfo && (
+                <Nav.Link
+                  as={Link}
+                  to="/myWorkout"
+                  className="d-flex align-items-center me-3"
+                >
+                  <FaDumbbell size={20} className="d-lg-none" />
+                  <span className="ms-2 d-none d-lg-inline">
+                    Editar meu Treino
+                  </span>
+                </Nav.Link>
+              )}
               <Link
                 as={Link}
                 to="/trainingTypes"
                 className="d-flex align-items-center me-3"
               >
                 <FaWeightHanging size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">Treinos</span>
+                <span className="ms-2 d-none d-lg-inline">
+                  Todos os Treinos
+                </span>
               </Link>
-              {userInfo && (
-              <Nav.Link
-                as={Link}
-                to="/myWorkout"
-                className="d-flex align-items-center me-3"
-              >
-                <FaDumbbell size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">Meu Treino</span>
-              </Nav.Link>
-            )}
+
               <Link as={Link} to="/blogs" className="d-flex align-items-center">
                 <FaNewspaper size={27} className="d-lg-none" />
                 <span className="ms-2 d-none d-lg-inline">Blog</span>
@@ -48,7 +59,7 @@ const Footer = () => {
                 className="d-flex align-items-center icon-bio-footer"
               >
                 <FaUserAlt size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">Sobre a GT</span>
+                <span className="ms-2 d-none d-lg-inline">Sobre o App</span>
               </Link>
 
               <div className="footer-top-container">

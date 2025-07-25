@@ -60,7 +60,7 @@ const Header = () => {
               >
                 <FaDumbbell size={20} className="d-lg-none" />
                 <span className="ms-2 d-none d-lg-inline">
-                  Editar Meu Treino
+                  Editar meu Treino
                 </span>
               </Nav.Link>
             )}
@@ -78,7 +78,7 @@ const Header = () => {
               className="d-flex align-items-center"
             >
               <FaNewspaper size={27} className="d-lg-none" />
-              <span className="ms-2 d-none d-lg-inline">Blogue</span>
+              <span className="ms-2 d-none d-lg-inline">Blog</span>
             </Nav.Link>
             <Nav.Link
               as={Link}
