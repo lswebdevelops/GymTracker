@@ -13,7 +13,7 @@ import { TRAINING_CODE_TO_MUSCLE_GROUP } from "../../utils/constants.js";
 
 // Dados dos exercícios organizados por grupo muscular
 const EXERCISE_DATA = {
-  "Pernas": [
+  Pernas: [
     "Agachamento Livre – 4x 8-12",
     "Leg Press – 3x 10-12",
     "Afundo com Halteres – 3x 10 (cada perna)",
@@ -30,9 +30,9 @@ const EXERCISE_DATA = {
     "Levantamento Terra Romeno – 4x 10",
     "Agachamento Sumo – 3x 12",
     "Glúteo na Polia – 3x 12",
-    "Elevação Pélvica com Barra – 3x 10-12"
+    "Elevação Pélvica com Barra – 3x 10-12",
   ],
-  "Costas": [
+  Costas: [
     "Puxada Frontal – 4x 8-12",
     "Remada Curvada – 4x 10",
     "Remada Unilateral – 3x 10",
@@ -50,9 +50,9 @@ const EXERCISE_DATA = {
     "Encolhimento com Halteres – 3x 15",
     "Puxada Pegada Aberta – 4x 10",
     "Remada Baixa – 3x 12",
-    "Levantamento Terra Romeno – 3x 8"
+    "Levantamento Terra Romeno – 3x 8",
   ],
-  "Bíceps": [
+  Bíceps: [
     "Rosca Direta com Barra – 4x 8-12",
     "Rosca Martelo – 3x 10-12",
     "Rosca Concentrada – 3x 12",
@@ -64,9 +64,9 @@ const EXERCISE_DATA = {
     "Rosca com Barra W – 3x 10-12",
     "Rosca no Cabo – 3x 12-15",
     "Rosca Hammer Cross Body – 3x 10",
-    "Rosca Pronada – 3x 12-15"
+    "Rosca Pronada – 3x 12-15",
   ],
-  "Tríceps": [
+  Tríceps: [
     "Tríceps Corda no Pulley – 3x 12-15",
     "Tríceps Francês – 3x 10-12",
     "Fundos em Paralelas – 3x 8-12",
@@ -76,9 +76,9 @@ const EXERCISE_DATA = {
     "Tríceps Pulley com Pegada Invertida – 3x 12-15",
     "Tríceps Coice – 3x 12-15",
     "Tríceps na Polia Alta – 3x 10-12",
-    "Supino Fechado – 4x 8-10"
+    "Supino Fechado – 4x 8-10",
   ],
-  "Peito": [
+  Peito: [
     "Supino Reto com Barra – 4x 8-12",
     "Supino Inclinado com Halteres – 3x 10-12",
     "Crucifixo com Halteres – 3x 12",
@@ -91,9 +91,9 @@ const EXERCISE_DATA = {
     "Crossover na Polia Alta – 3x 12-15",
     "Crucifixo Inclinado – 3x 15",
     "Supino Declinado – 3x 10-12",
-    "Peck Deck – 3x 12-15"
+    "Peck Deck – 3x 12-15",
   ],
-  "Ombros": [
+  Ombros: [
     "Desenvolvimento com Halteres – 4x 8-12",
     "Elevação Lateral – 3x 12-15",
     "Elevação Frontal – 3x 10-12",
@@ -104,9 +104,9 @@ const EXERCISE_DATA = {
     "Face Pull – 3x 15",
     "Desenvolvimento na Máquina – 3x 12",
     "Elevação Lateral na Polia – 3x 12-15",
-    "Remada Alta – 3x 10-12"
+    "Remada Alta – 3x 10-12",
   ],
-  "Funcional": [
+  Funcional: [
     "Burpee – 3x 10",
     "Mountain Climber – 3x 20",
     "Jump Squat – 3x 15",
@@ -120,8 +120,8 @@ const EXERCISE_DATA = {
     "Agility Ladder – 3x 1 minuto",
     "Bear Crawl – 3x 10 metros",
     "Turkish Get Up – 3x 5 (cada lado)",
-    "Farmer's Walk – 3x 20 metros"
-  ]
+    "Farmer's Walk – 3x 20 metros",
+  ],
 };
 
 const TrainingTypeEditScreen = () => {
@@ -147,12 +147,15 @@ const TrainingTypeEditScreen = () => {
     if (trainingType) {
       setName(trainingType.name);
       setCategory(trainingType.category);
-      
+
       // Converte a description em array de exercícios
-      if (trainingType.description && trainingType.description !== "Adicionar séries erepetições") {
+      if (
+        trainingType.description &&
+        trainingType.description !== "Adicionar séries erepetições"
+      ) {
         const exercises = trainingType.description
-          .split('\n')
-          .filter(ex => ex.trim() !== '');
+          .split("\n")
+          .filter((ex) => ex.trim() !== "");
         setSelectedExercises(exercises);
       }
     }
@@ -172,7 +175,9 @@ const TrainingTypeEditScreen = () => {
   };
 
   const removeExercise = (exerciseToRemove) => {
-    setSelectedExercises(selectedExercises.filter(ex => ex !== exerciseToRemove));
+    setSelectedExercises(
+      selectedExercises.filter((ex) => ex !== exerciseToRemove)
+    );
   };
 
   const submitHandler = async (e) => {
@@ -190,7 +195,7 @@ const TrainingTypeEditScreen = () => {
     const updatedTrainingType = {
       name,
       category,
-      description: selectedExercises.join('\n'), // Converte array em string
+      description: selectedExercises.join("\n"), // Converte array em string
     };
 
     try {
@@ -209,6 +214,8 @@ const TrainingTypeEditScreen = () => {
       toast.error("Erro ao atualizar treino");
     }
   };
+  // Estado para exercício manual
+  const [manualExercise, setManualExercise] = useState("");
 
   return (
     <>
@@ -238,12 +245,36 @@ const TrainingTypeEditScreen = () => {
                     >
                       {[
                         "Selecione uma Opção:",
-                        "A1", "A2", "A3", "A4", "A5",
-                        "B1", "B2", "B3", "B4", "B5",
-                        "C1", "C2", "C3", "C4", "C5",
-                        "D1", "D2", "D3", "D4", "D5",
-                        "E1", "E2", "E3", "E4", "E5",
-                        "F1", "F2", "F3", "F4", "F5",
+                        "A1",
+                        "A2",
+                        "A3",
+                        "A4",
+                        "A5",
+                        "B1",
+                        "B2",
+                        "B3",
+                        "B4",
+                        "B5",
+                        "C1",
+                        "C2",
+                        "C3",
+                        "C4",
+                        "C5",
+                        "D1",
+                        "D2",
+                        "D3",
+                        "D4",
+                        "D5",
+                        "E1",
+                        "E2",
+                        "E3",
+                        "E4",
+                        "E5",
+                        "F1",
+                        "F2",
+                        "F3",
+                        "F4",
+                        "F5",
                       ].map((option) => (
                         <option key={option} value={option}>
                           {option}
@@ -263,7 +294,8 @@ const TrainingTypeEditScreen = () => {
                       className="bg-light"
                     />
                     <Form.Text className="text-muted">
-                      Este campo é atualizado automaticamente baseado no código do treino
+                      Este campo é atualizado automaticamente baseado no código
+                      do treino
                     </Form.Text>
                   </Form.Group>
 
@@ -286,34 +318,102 @@ const TrainingTypeEditScreen = () => {
                   {/* Lista de exercícios do grupo selecionado */}
                   <div className="my-3">
                     <h6>Exercícios Disponíveis - {currentMuscleGroup}</h6>
-                    <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ddd', padding: '10px', borderRadius: '5px' }}>
-                      {EXERCISE_DATA[currentMuscleGroup].map((exercise, index) => (
-                        <div key={index} className="d-flex justify-content-between align-items-center mb-2">
-                          <span style={{ fontSize: '0.9rem' }}>{exercise}</span>
-                          <Button
-                            size="sm"
-                            variant="outline-primary"
-                            onClick={() => addExercise(exercise)}
-                            disabled={selectedExercises.includes(exercise)}
+                    <div
+                      style={{
+                        maxHeight: "200px",
+                        overflowY: "auto",
+                        border: "1px solid #ddd",
+                        padding: "10px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {EXERCISE_DATA[currentMuscleGroup].map(
+                        (exercise, index) => (
+                          <div
+                            key={index}
+                            className="d-flex justify-content-between align-items-center mb-2"
                           >
-                            +
-                          </Button>
-                        </div>
-                      ))}
+                            <span style={{ fontSize: "0.9rem" }}>
+                              {exercise}
+                            </span>
+                            <Button
+                              size="sm"
+                              variant="outline-primary"
+                              onClick={() => addExercise(exercise)}
+                              disabled={selectedExercises.includes(exercise)}
+                            >
+                              +
+                            </Button>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Campo para adicionar exercício manualmente */}
+                  <div className="my-3">
+                    <Form.Label>Adicionar Exercício Manual</Form.Label>
+                    <div className="d-flex">
+                      <Form.Control
+                        type="text"
+                        placeholder="Digite o nome do exercício"
+                        value={manualExercise}
+                        onChange={(e) => setManualExercise(e.target.value)}
+                      />
+                      <Button
+                        variant="success"
+                        className="ms-2"
+                        onClick={() => {
+                          const trimmed = manualExercise.trim();
+                          if (trimmed.length === 0) {
+                            toast.error("O exercício não pode ser vazio.");
+                          } else if (selectedExercises.includes(trimmed)) {
+                            toast.error("Este exercício já foi adicionado.");
+                          } else {
+                            setSelectedExercises([
+                              ...selectedExercises,
+                              trimmed,
+                            ]);
+                            setManualExercise("");
+                          }
+                        }}
+                      >
+                        Adicionar
+                      </Button>
                     </div>
                   </div>
 
                   {/* Exercícios selecionados */}
                   <div className="my-3">
-                    <h6>Exercícios Selecionados ({selectedExercises.length})</h6>
-                    <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ddd', padding: '10px', borderRadius: '5px', backgroundColor: '#f8f9fa' }}>
+                    <h6>
+                      Exercícios Selecionados ({selectedExercises.length})
+                    </h6>
+                    <div
+                      style={{
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                        border: "1px solid #ddd",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        backgroundColor: "#f8f9fa",
+                      }}
+                    >
                       {selectedExercises.length === 0 ? (
-                        <p className="text-muted">Nenhum exercício selecionado</p>
+                        <p className="text-muted">
+                          Nenhum exercício selecionado
+                        </p>
                       ) : (
                         selectedExercises.map((exercise, index) => (
-                          <div key={index} className="d-flex justify-content-between align-items-center mb-2">
-                            <Badge bg="secondary" className="me-2">{index + 1}</Badge>
-                            <span style={{ fontSize: '0.9rem', flex: 1 }}>{exercise}</span>
+                          <div
+                            key={index}
+                            className="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <Badge bg="secondary" className="me-2">
+                              {index + 1}
+                            </Badge>
+                            <span style={{ fontSize: "0.9rem", flex: 1 }}>
+                              {exercise}
+                            </span>
                             <Button
                               size="sm"
                               variant="outline-danger"
@@ -345,12 +445,24 @@ const TrainingTypeEditScreen = () => {
               grupo muscular específico:
             </p>
             <ul>
-              <li><strong>A:</strong> Pernas</li>
-              <li><strong>B:</strong> Costas</li>
-              <li><strong>C:</strong> Bíceps</li>
-              <li><strong>D:</strong> Tríceps</li>
-              <li><strong>E:</strong> Peito</li>
-              <li><strong>F:</strong> Funcional</li>
+              <li>
+                <strong>A:</strong> Pernas
+              </li>
+              <li>
+                <strong>B:</strong> Costas
+              </li>
+              <li>
+                <strong>C:</strong> Bíceps
+              </li>
+              <li>
+                <strong>D:</strong> Tríceps
+              </li>
+              <li>
+                <strong>E:</strong> Peito
+              </li>
+              <li>
+                <strong>F:</strong> Funcional
+              </li>
             </ul>
             <p>
               Os treinos devem ser montados combinando letras diferentes, mas
@@ -364,15 +476,16 @@ const TrainingTypeEditScreen = () => {
                 <strong>Treino 2</strong>: 5 exercícios → A2, B2, C2, D2, E2
               </li>
             </ul>
-            
+
             <Card className="mt-3">
               <Card.Header>
                 <h6>Como Usar o Sistema</h6>
               </Card.Header>
               <Card.Body>
-                <ol style={{ fontSize: '0.9rem' }}>
+                <ol style={{ fontSize: "0.9rem" }}>
                   <li>Selecione um grupo muscular no dropdown</li>
                   <li>Clique no botão "+" para adicionar exercícios</li>
+                  <li>Ou digite um novo exercício e clique em "Adicionar"</li>
                   <li>Os exercícios selecionados aparecerão na lista abaixo</li>
                   <li>Use o "×" para remover exercícios indesejados</li>
                   <li>Salve quando terminar a seleção</li>
