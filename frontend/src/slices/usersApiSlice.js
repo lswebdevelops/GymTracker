@@ -16,7 +16,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
         try {
           const { data: userInfo } = await queryFulfilled; // Dados do usuário após o login
           // Atualizando o estado global com os dados do usuário logado
-          dispatch(apiSlice.util.updateQueryData('getUserDetails', userInfo.id, { userInfo }));
+          // Note: The `setCredentials` action should handle storing this userInfo
+          // If you have `setCredentials` in authSlice, it will handle this.
+          // This `updateQueryData` might be redundant or for specific cache invalidation.
+          // For now, let's assume `setCredentials` is the primary update mechanism.
         } catch (err) {
           console.error('Erro ao armazenar dados do usuário:', err);
         }
@@ -40,70 +43,83 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    // Atualizar o perfil do usuário
+    // Atualizar o perfil do usuário (para o usuário logado)
     profile: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/profile`, // URL para atualizar o perfil
         method: 'PUT', // Método PUT para atualizar dados
-        body: data, // Dados a serem atualizados (como nome, email, etc.)
+        body: data, // Dados a serem atualizados (como nome, email, currentWorkoutIndex, lastCompletedWorkout)
       }),
     }),
 
-    // Obter lista de usuários
+    // *** NOVO: Obter o perfil do usuário logado ***
+    getProfile: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/profile`, // URL para obter o perfil do usuário logado
+      }),
+      // This query should not be cached for too long if user data changes frequently
+      // or if it's the primary source of truth for current user data.
+      // `providesTags` can be used for invalidation if other mutations affect it.
+      providesTags: ['User'], // Tag to invalidate this query if user data changes
+      keepUnusedDataFor: 60, // Keep data for a short period, adjust as needed
+    }),
+
+    // Obter lista de usuários (Admin)
     getUsers: builder.query({
       query: () => ({
         url: USERS_URL, // URL para obter todos os usuários
       }),
-      providesTags: ['User'], // Marca a consulta como 'User', útil para cache
-      keepUnusedDataFor: 5, // Mantém o cache por 5 segundos
+      providesTags: ['User'],
+      keepUnusedDataFor: 5,
     }),
 
-    // Deletar um usuário
+    // Deletar um usuário (Admin)
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `${USERS_URL}/${userId}`, // URL para deletar um usuário específico
-        method: 'DELETE', // Método DELETE para remover o usuário
+        method: 'DELETE',
       }),
-      invalidatesTags: ['User'], // Invalida o cache 'User' após exclusão
+      invalidatesTags: ['User'],
     }),
 
-    // Obter detalhes de um usuário
+    // Obter detalhes de um usuário por ID (Admin)
     getUserDetails: builder.query({
       query: (id) => ({
         url: `${USERS_URL}/${id}`, // URL para obter detalhes de um usuário específico
       }),
-      keepUnusedDataFor: 5, // Mantém o cache por 5 segundos
+      keepUnusedDataFor: 5,
     }),
 
-    // Atualizar os dados de um usuário
+    // Atualizar os dados de um usuário por ID (Admin)
     updateUser: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/${data.userId}`, // URL para atualizar o usuário
-        method: 'PUT', // Método PUT para atualização
-        body: data, // Dados a serem atualizados
+        method: 'PUT',
+        body: data,
       }),
-      invalidatesTags: ['User'], // Invalida o cache 'User' após atualização
+      invalidatesTags: ['User'],
     }),
 
-    // Obter uma lista de emails (apenas)
+    // Obter uma lista de emails (apenas) (Admin)
     getEmails: builder.query({
       query: () => ({
         url: `${USERS_URL}/email-list`, // URL para obter apenas a lista de emails
       }),
-      keepUnusedDataFor: 5, // Mantém o cache por 5 segundos
+      keepUnusedDataFor: 5,
     }),
   }),
 });
 
 // Exportando os hooks gerados para uso em componentes React
 export const {
-  useLoginMutation, // Hook para login
-  useLogoutMutation, // Hook para logout
-  useRegisterMutation, // Hook para registro
-  useProfileMutation, // Hook para atualizar perfil
-  useGetUsersQuery, // Hook para obter lista de usuários
-  useDeleteUserMutation, // Hook para deletar um usuário
-  useUpdateUserMutation, // Hook para atualizar um usuário
-  useGetUserDetailsQuery, // Hook para obter detalhes de um usuário
-  useGetEmailsQuery, // Hook para obter lista de emails
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useProfileMutation, // Existing hook for PUT /profile
+  useGetProfileQuery, // *** NOVO: Hook para GET /profile ***
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+  useGetUserDetailsQuery,
+  useGetEmailsQuery,
 } = userApiSlice;

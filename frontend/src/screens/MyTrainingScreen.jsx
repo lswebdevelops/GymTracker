@@ -6,18 +6,25 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useSelector } from 'react-redux'; // Import useSelector
+import { useUpdateUserMutation } from '../slices/usersApiSlice'; // Import mutation for user updates
 
 const MyTrainingScreen = () => {
+  const { userInfo } = useSelector((state) => state.auth); // Get userInfo from Redux
+
   const {
     data: workouts,
     isLoading,
     error,
     refetch,
   } = useGetMyWorkoutDetailsQuery();
+
   const [deleteWorkout, { isLoading: loadingDelete }] =
     useDeleteMyWorkoutMutation();
 
-  // Se o erro for "Workout not found", exibe mensagem de treino não adicionado.
+  const [updateUser] = useUpdateUserMutation(); // User update mutation
+
+  // If the error is "Workout not found", display a message that no workouts have been added.
   if (
     error &&
     (error?.data?.message === "Adicione um Treino" ||
@@ -34,52 +41,64 @@ const MyTrainingScreen = () => {
       </Message>
     );
 
+  const handleDelete = async (workoutId) => {
+    if (window.confirm("Tem certeza que deseja deletar este treino?")) {
+      try {
+        await deleteWorkout(workoutId).unwrap();
+        toast.success("Treino deletado");
+        refetch(); // Refetch the user's workouts
+
+        // After deleting a workout, reset currentWorkoutIndex to 0 in the user's database record.
+        // This ensures the user starts from the beginning of their remaining workouts.
+        if (userInfo) {
+          await updateUser({ _id: userInfo._id, currentWorkoutIndex: 0 })
+            .unwrap()
+            .then(() => {
+              // The user info in Redux will be updated upon the next login or data fetch
+              // For a more immediate UI update, you might need to dispatch an action
+              // or refetch user data explicitly after updating currentWorkoutIndex.
+              // For now, relying on next login/data fetch for full sync.
+            })
+            .catch((err) => {
+              console.error("Failed to reset user workout index after deletion:", err);
+            });
+        }
+
+      } catch (err) {
+        toast.error(
+          err?.data?.message || "Falha ao deletar treino"
+        );
+      }
+    }
+  };
+
   return (
     <>
       <h2 className="text-center mb-4">Editar meus Treinos</h2>
       {workouts && workouts.length > 0 ? (
         <Row>
-          {workouts.map((workout, index) => {
-            // A propriedade trainingType foi populada pelo populate() no controller
-            const training = workout.trainingType;
+          {workouts.map((workout) => {
+            // Now 'workout' directly contains 'name', 'category', 'description'
+            // No need to access workout.trainingType
             return (
-              <Col key={index} md={6} lg={4} className="mb-3">
+              <Col key={workout._id} md={6} lg={4} className="mb-3">
                 <Card className="workout-card shadow-sm">
                   <Card.Body>
                     <Card.Title className="text-primary">
-                      {training.name}
+                      {workout.name}
                     </Card.Title>
                     <hr />
                     <Card.Text>
-                      <strong>Categoria:</strong> {training.category || "N/A"}
+                      <strong>Categoria:</strong> {workout.category || "N/A"}
                       <br />
                       <br />
-                      {training.description || "Sem descrição"}
+                      {workout.description || "Sem descrição"}
                     </Card.Text>
                     <div className="d-flex justify-content-between mt-3">
                       <Button
                         variant="danger"
                         size="sm"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "Tem certeza que deseja deletar este treino?"
-                            )
-                          ) {
-                            deleteWorkout(workout._id)
-                              .unwrap()
-                              .then(() => {
-                                toast.success("Treino deletado");
-                                refetch();
-                              })
-                              .catch((err) => {
-                                toast.error(
-                                  err?.data?.message ||
-                                    "Falha ao deletar treino"
-                                );
-                              });
-                          }
-                        }}
+                        onClick={() => handleDelete(workout._id)}
                         disabled={loadingDelete}
                       >
                         {loadingDelete ? "Deletando..." : "Deletar treino"}

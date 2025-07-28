@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { Table, Button, Row, Col, Badge, Collapse } from "react-bootstrap";
 import { FaEdit, FaTrash, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -84,12 +85,12 @@ const TrainingTypeListScreen = () => {
           <Paginate pages={data?.pages} page={data?.page} isAdmin={true} />
           <h1>Treinos</h1>
         </Col>
-        <Col className="text-end">
+        {/* <Col className="text-end">
           <Button onClick={createTrainingTypeHandler} className="btn-sm m-3">
             <FaEdit />
             &nbsp; Criar Treino
           </Button>
-        </Col>
+        </Col> */}
       </Row>
       {loadingCreate && <Loader />}
       {loadingDelete && <Loader />}
@@ -111,115 +112,117 @@ const TrainingTypeListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.trainingTypes.map((trainingType) => {
-                const exerciseCount = getExerciseCount(
-                  trainingType.description
-                );
-                const exercises = formatExercises(trainingType.description);
-                const isExpanded = expandedRows[trainingType._id];
-                const muscleGroup = getMuscleGroup(trainingType);
+              {[...data.trainingTypes]
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((trainingType) => {
+                  const exerciseCount = getExerciseCount(
+                    trainingType.description
+                  );
+                  const exercises = formatExercises(trainingType.description);
+                  const isExpanded = expandedRows[trainingType._id];
+                  const muscleGroup = getMuscleGroup(trainingType);
 
-                return (
-                  <>
-                    <tr key={trainingType._id}>
-                      <td>
-                        <small className="text-muted">
-                          {trainingType._id.slice(-6)}
-                        </small>
-                      </td>
-                      <td>
-                        <Badge
-                          bg={
-                            trainingType.name.charAt(0) === "A"
-                              ? "primary"
-                              : trainingType.name.charAt(0) === "B"
-                              ? "success"
-                              : trainingType.name.charAt(0) === "C"
-                              ? "warning"
-                              : trainingType.name.charAt(0) === "D"
-                              ? "danger"
-                              : trainingType.name.charAt(0) === "E"
-                              ? "info"
-                              : "dark"
-                          }
-                          className="me-2"
-                        >
-                          {trainingType.name}
-                        </Badge>
-                      </td>
-                      <td>{muscleGroup}</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <Badge
-                            bg={exerciseCount === 0 ? "danger" : "success"}
-                          >
-                            {exerciseCount}
-                          </Badge>
-
-                          {exerciseCount > 0 && (
-                            <Button
-                              variant="link"
-                              size="sm"
-                              onClick={() =>
-                                toggleRowExpansion(trainingType._id)
-                              }
-                              className="p-0"
-                            >
-                              {isExpanded ? <FaEyeSlash /> : <FaEye />}
-                            </Button>
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <Link
-                          to={`/admin/trainingType/${trainingType._id}/edit`}
-                        >
-                          <Button variant="light" className="btn-sm mx-1">
-                            <FaEdit />
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="danger"
-                          className="btn-sm mx-1"
-                          onClick={() => deleteHandler(trainingType._id)}
-                        >
-                          <FaTrash style={{ color: "white" }} />
-                        </Button>
-                      </td>
-                    </tr>
-
-                    {/* Linha expandida com exercícios */}
-                    {exercises.length > 0 && (
+                  return (
+                    <React.Fragment key={trainingType._id}>
                       <tr>
-                        <td colSpan="5" className="p-0">
-                          <Collapse in={isExpanded}>
-                            <div className="bg-light p-3 border-top">
-                              <h6 className="mb-2">
-                                Exercícios do Treino {trainingType.name}:
-                              </h6>
-                              <Row>
-                                {exercises.map((exercise, index) => (
-                                  <Col md={6} key={index} className="mb-2">
-                                    <div className="d-flex align-items-start">
-                                      <Badge
-                                        bg="outline-primary"
-                                        className="me-2 mt-1"
-                                      >
-                                        {index + 1}
-                                      </Badge>
-                                      <small>{exercise}</small>
-                                    </div>
-                                  </Col>
-                                ))}
-                              </Row>
-                            </div>
-                          </Collapse>
+                        <td>
+                          <small className="text-muted">
+                            {trainingType._id.slice(-6)}
+                          </small>
+                        </td>
+                        <td>
+                          <Badge
+                            bg={
+                              trainingType.name.charAt(0) === "A"
+                                ? "primary"
+                                : trainingType.name.charAt(0) === "B"
+                                ? "success"
+                                : trainingType.name.charAt(0) === "C"
+                                ? "warning"
+                                : trainingType.name.charAt(0) === "D"
+                                ? "danger"
+                                : trainingType.name.charAt(0) === "E"
+                                ? "info"
+                                : "dark"
+                            }
+                            className="me-2"
+                          >
+                            {trainingType.name}
+                          </Badge>
+                        </td>
+                        <td>{muscleGroup}</td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <Badge
+                              bg={exerciseCount === 0 ? "danger" : "success"}
+                            >
+                              {exerciseCount}
+                            </Badge>
+
+                            {exerciseCount > 0 && (
+                              <Button
+                                variant="link"
+                                size="sm"
+                                onClick={() =>
+                                  toggleRowExpansion(trainingType._id)
+                                }
+                                className="p-0"
+                              >
+                                {isExpanded ? <FaEyeSlash /> : <FaEye />}
+                              </Button>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <Link
+                            to={`/admin/trainingType/${trainingType._id}/edit`}
+                          >
+                            <Button variant="light" className="btn-sm mx-1">
+                              <FaEdit />
+                            </Button>
+                          </Link>
+                          <Button
+                            variant="danger"
+                            className="btn-sm mx-1"
+                            onClick={() => deleteHandler(trainingType._id)}
+                          >
+                            <FaTrash style={{ color: "white" }} />
+                          </Button>
                         </td>
                       </tr>
-                    )}
-                  </>
-                );
-              })}
+
+                      {/* Linha expandida com exercícios */}
+                      {exercises.length > 0 && (
+                        <tr>
+                          <td colSpan="5" className="p-0">
+                            <Collapse in={isExpanded}>
+                              <div className="bg-light p-3 border-top">
+                                <h6 className="mb-2">
+                                  Exercícios do Treino {trainingType.name}:
+                                </h6>
+                                <Row>
+                                  {exercises.map((exercise, index) => (
+                                    <Col md={6} key={index} className="mb-2">
+                                      <div className="d-flex align-items-start">
+                                        <Badge
+                                          bg="outline-primary"
+                                          className="me-2 mt-1"
+                                        >
+                                          {index + 1}
+                                        </Badge>
+                                        <small>{exercise}</small>
+                                      </div>
+                                    </Col>
+                                  ))}
+                                </Row>
+                              </div>
+                            </Collapse>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
             </tbody>
           </Table>
 

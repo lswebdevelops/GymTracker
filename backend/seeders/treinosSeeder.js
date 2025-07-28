@@ -4,6 +4,7 @@ import colors from 'colors';
 import connectDB from '../config/db.js';
 import TrainingType from '../models/trainingTypeModel.js';
 import User from '../models/userModel.js';
+import Workout from '../models/myWorkoutModel.js'; // Importar o modelo Workout
 
 dotenv.config();
 await connectDB();
@@ -52,28 +53,77 @@ const trainingTypes = [
   { name: 'F5', category: 'Abdômen', description: 'Mountain climber\nAbdominal com polia alta\nPrancha com halteres\nCrunch cruzado\nElevação suspensa' },
 ];
 
-const importTrainingTypes = async () => {
+const importData = async () => {
   try {
+    // 1. Limpar dados existentes para evitar inconsistências
+    console.log('Limpando dados existentes...'.yellow.inverse);
     await TrainingType.deleteMany();
-    const user = await User.findOne({ isAdmin: true });
+    await Workout.deleteMany(); // Limpa todos os treinos dos usuários
+    // Resetar campos de progresso para todos os usuários (exceto admin, se preferir)
+    // Ou, se quiser resetar TUDO e recriar usuários, use User.deleteMany()
+    await User.updateMany(
+      {}, // Atualiza todos os usuários
+      { $set: { lastCompletedWorkout: null, currentWorkoutIndex: 0 } }
+    );
+    console.log('Dados existentes limpos!'.yellow.inverse);
 
-    if (!user) {
-      console.log('Admin user not found'.red.inverse);
-      process.exit(1);
+    // 2. Encontrar o usuário admin (assumindo que ele já existe ou será criado separadamente)
+    let adminUser = await User.findOne({ isAdmin: true });
+
+    // Se não houver admin, você pode criar um aqui ou garantir que seu processo de registro o faça.
+    // Para este seeder, vamos assumir que o admin já existe ou que você o criará manualmente.
+    // Se o admin não for encontrado, o seeder irá falhar.
+    if (!adminUser) {
+      console.log('Usuário admin não encontrado. Por favor, crie um usuário admin primeiro.'.red.inverse);
+      // Opcional: Criar um admin padrão se não existir
+      // adminUser = await User.create({
+      //   name: 'Admin User',
+      //   email: 'admin@example.com',
+      //   password: '123456', // Mude para uma senha segura em produção
+      //   isAdmin: true,
+      // });
+      // console.log('Usuário admin padrão criado.'.green.inverse);
+      process.exit(1); // Saia se o admin não for encontrado e não for criado
     }
 
+    // 3. Inserir os tipos de treino (treinos gerais)
     const trainingTypesWithUser = trainingTypes.map((t) => ({
       ...t,
-      user: user._id,
+      user: adminUser._id, // Associa os treinos gerais ao admin
     }));
 
     await TrainingType.insertMany(trainingTypesWithUser);
-    console.log('Training types seeded!'.green.inverse);
+    console.log('Tipos de treino (gerais) populados!'.green.inverse);
+
+    console.log('Dados importados com sucesso!'.green.inverse);
     process.exit();
   } catch (error) {
-    console.error(`${error}`.red.inverse);
+    console.error(`Erro ao importar dados: ${error}`.red.inverse);
     process.exit(1);
   }
 };
 
-importTrainingTypes();
+const destroyData = async () => {
+  try {
+    await TrainingType.deleteMany();
+    await Workout.deleteMany();
+    await User.deleteMany(); // Deleta todos os usuários (incluindo admin)
+    console.log('Dados destruídos!'.red.inverse);
+    process.exit();
+  } catch (error) {
+    console.error(`Erro ao destruir dados: ${error}`.red.inverse);
+    process.exit(1);
+  }
+};
+
+// Adicione scripts ao package.json para rodar o seeder
+// "scripts": {
+//   "data:import": "node backend/seeder.js",
+//   "data:destroy": "node backend/seeder.js -d"
+// }
+
+if (process.argv[2] === '-d') {
+  destroyData();
+} else {
+  importData();
+}

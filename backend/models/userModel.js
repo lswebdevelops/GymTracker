@@ -22,16 +22,16 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     lastCompletedWorkout: {
-      type: String,
+      type: String, // Stores the name of the last completed workout for display/history
       default: null,
     },
-    currentExerciseIndex: { // Novo campo para rastrear o progresso
+    currentWorkoutIndex: { // Tracks the user's progress through their assigned workouts
       type: Number,
       default: 0,
     },
-    currentTrainingProgramId: { // Opcional: Se você precisa rastrear qual programa o usuário está seguindo
+    currentTrainingProgramId: { // Optional: If you need to track which program the user is following
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'TrainingProgram', // Supondo que você tenha um model chamado 'TrainingProgram'
+      ref: 'TrainingProgram', // Assuming you have a model called 'TrainingProgram'
       default: null,
     },
   },
