@@ -39,11 +39,11 @@ const TRAINING_CODE_TO_MUSCLE_GROUP = {
   E3: "Peito",
   E4: "Peito",
   E5: "Peito",
-  F1: "Funcional",
-  F2: "Funcional",
-  F3: "Funcional",
-  F4: "Funcional",
-  F5: "Funcional",
+  F1: "Abdômen",
+  F2: "Abdômen",
+  F3: "Abdômen",
+  F4: "Abdômen",
+  F5: "Abdômen",
 };
 
 const HomeScreen = () => {
@@ -159,8 +159,7 @@ const HomeScreen = () => {
 
       {userInfo?.lastCompletedWorkout && (
         <div className="mb-4">
-          <h3 className="h3-recent-titles">Último Treino Concluído:</h3>
-          <p className="lead">{userInfo.lastCompletedWorkout}</p>
+          
         </div>
       )}
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import gtLogo from "../assets/GymTracker-logo.png";
 
 const BiographyScreen = () => {
   const [biography, setBiography] = useState([]);
@@ -37,7 +36,7 @@ const BiographyScreen = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={gtLogo} alt="gt-logo" style={{ height: "75px" }} /> Gym
+              <img src="https://res.cloudinary.com/dvnxrzpnl/image/upload/v1753722850/GymTracker-logo.1b003fe566f2d3b2697f_pl5sto.png" alt="gt-logo" style={{ height: "75px" }} /> Gym
               Tracker
             </Link>
           </div>

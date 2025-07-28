@@ -106,7 +106,7 @@ const EXERCISE_DATA = {
     "Elevação Lateral na Polia – 3x 12-15",
     "Remada Alta – 3x 10-12",
   ],
-  Funcional: [
+  Abdômen: [
     "Burpee – 3x 10",
     "Mountain Climber – 3x 20",
     "Jump Squat – 3x 15",
@@ -461,7 +461,7 @@ const TrainingTypeEditScreen = () => {
                 <strong>E:</strong> Peito
               </li>
               <li>
-                <strong>F:</strong> Funcional
+                <strong>F:</strong> Abdômen
               </li>
             </ul>
             <p>

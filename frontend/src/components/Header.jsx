@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import {
   FaUser,
@@ -13,8 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-import logo from "../assets/gt-logo.png";
-import SearchBox from "./SearchBox";
+
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -39,7 +38,7 @@ const Header = () => {
         <Container>
           {/* Logo */}
           <Navbar.Brand href="/">
-            <img src={logo} alt="logo of HW" className="logo-hw" />
+            <img src="https://res.cloudinary.com/dvnxrzpnl/image/upload/v1753722672/download_elmwmo.png" alt="logo of HW" className="logo-hw" />
           </Navbar.Brand>
 
           <Nav className="me-auto d-flex flex-row nav-header">

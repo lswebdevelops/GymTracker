@@ -5,5 +5,5 @@ export const TRAINING_CODE_TO_MUSCLE_GROUP = {
   'C1': 'Bíceps', 'C2': 'Bíceps', 'C3': 'Bíceps', 'C4': 'Bíceps', 'C5': 'Bíceps',
   'D1': 'Tríceps', 'D2': 'Tríceps', 'D3': 'Tríceps', 'D4': 'Tríceps', 'D5': 'Tríceps',
   'E1': 'Peito', 'E2': 'Peito', 'E3': 'Peito', 'E4': 'Peito', 'E5': 'Peito',
-  'F1': 'Funcional', 'F2': 'Funcional', 'F3': 'Funcional', 'F4': 'Funcional', 'F5': 'Funcional'
+  'F1': 'Abdômen', 'F2': 'Abdômen', 'F3': 'Abdômen', 'F4': 'Abdômen', 'F5': 'Abdômen'
 };

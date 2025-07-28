@@ -86,7 +86,7 @@ const TrainingTypeScreen = () => {
                         <Badge bg="info text-dark">E</Badge> Peito
                       </li>
                       <li>
-                        <Badge bg="dark">F</Badge> Funcional
+                        <Badge bg="dark">F</Badge> Abdômen
                       </li>
                     </ul>
                   </div>
