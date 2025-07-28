@@ -733,8 +733,8 @@ a {
 .workout-progress-item {
   border: 1px solid #ccc;
   padding: 10px 15px;
-  margin: 0 5px; /* Espaçamento horizontal entre os blocos */
-  min-width: 60px; /* Largura mínima para os blocos */
+  margin: 5px; /* Espaçamento horizontal entre os blocos */
+  min-width: 50px; /* Largura mínima para os blocos */
   text-align: center;
   font-weight: bold;
   color: #333;
