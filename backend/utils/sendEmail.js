@@ -21,7 +21,7 @@ const sendEmail = async (options) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email enviado: ", info.messageId); // THIS IS NOT BEING LOGGED!
+    // console.log("Email enviado: ", info.messageId); // THIS IS NOT BEING LOGGED!
   } catch (error) {
     console.error("Erro no envio do email:", error); // THIS IS LIKELY BEING LOGGED!
     throw error;

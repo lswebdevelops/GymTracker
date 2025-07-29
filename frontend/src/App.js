@@ -28,24 +28,24 @@ const App = () => {
 
   useEffect(() => {
     console.log('App useEffect triggered.');
-    console.log('userInfo (redux):', userInfo);
-    console.log('localStorage userInfo:', localStorage.getItem('userInfo'));
-    console.log('shouldSkipProfileQuery:', shouldSkipProfileQuery);
-    console.log('isLoadingProfile:', isLoadingProfile);
-    console.log('isProfileSuccess:', isProfileSuccess);
-    console.log('isProfileError:', isProfileError);
-    console.log('profileLoaded (current):', profileLoaded);
+    // console.log('userInfo (redux):', userInfo);
+    // console.log('localStorage userInfo:', localStorage.getItem('userInfo'));
+    // console.log('shouldSkipProfileQuery:', shouldSkipProfileQuery);
+    // console.log('isLoadingProfile:', isLoadingProfile);
+    // console.log('isProfileSuccess:', isProfileSuccess);
+    // console.log('isProfileError:', isProfileError);
+    // console.log('profileLoaded (current):', profileLoaded);
 
 
     // Cenário 1: Perfil buscado com sucesso (usuário estava logado e token válido)
     if (isProfileSuccess && profileData) {
-      console.log('Cenário 1: Perfil com sucesso.');
+      // console.log('Cenário 1: Perfil com sucesso.');
       dispatch(setCredentials(profileData));
       setProfileLoaded(true); // Marca o perfil como carregado
     }
     // Cenário 2: Erro ao buscar o perfil (usuário estava logado, mas token inválido/expirado, ou erro de rede)
     else if (isProfileError) {
-      console.error("Falha ao buscar o perfil do usuário na inicialização do aplicativo:", profileData);
+      // console.error("Falha ao buscar o perfil do usuário na inicialização do aplicativo:", profileData);
       dispatch(logout()); // Despacha a ação de logout para limpar as informações do usuário
       setProfileLoaded(true); // Marca como carregado para parar o loader e permitir que o aplicativo renderize
     }

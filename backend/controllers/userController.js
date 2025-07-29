@@ -244,12 +244,13 @@ const forgotPassword = asyncHandler(async (req, res) => {
       subject: "Redefinição de Senha - Gym Tracker",
       message: message,
     });
-    console.log(`Envie o email para: ${user.email} com o link: ${resetUrl}`);
+    // console.log(`Envie o email para: ${user.email} com o link: ${resetUrl}`);
     res.status(200).json({
       message: "Instruções de redefinição de senha enviadas para seu e-mail.",
     });
   } catch (err) {
-    console.error("Erro ao enviar email de redefinição de senha:", err);
+    // console.error("Erro ao enviar email de redefinição de senha:", err);
+  
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
@@ -274,8 +275,8 @@ const resetPassword = asyncHandler(async (req, res) => {
     .update(token)
     .digest("hex");
 
-  console.log("Incoming token (from frontend, unhashed):", token);
-  console.log("Hashed token for query:", hashedTokenFromFrontend);
+  // console.log("Incoming token (from frontend, unhashed):", token);
+  // console.log("Hashed token for query:", hashedTokenFromFrontend);
 
   // >>> LINHA CORRIGIDA: Buscar o usuário pelo token hashed e validade <<<
   const user = await User.findOne({
@@ -284,7 +285,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    console.error("Nenhum usuário encontrado para o token fornecido ou token expirado.");
+    // console.error("Nenhum usuário encontrado para o token fornecido ou token expirado.");
     res.status(400);
     throw new Error("Token inválido ou expirado");
   }

@@ -123,7 +123,7 @@ const deleteBlog = asyncHandler(async (req, res) => {
     try {
       // Excluindo os comentários associados ao blog
       const comments = await Comment.find({ entityId: req.params.id });
-      console.log("Comentários encontrados para exclusão:", comments);
+      // console.log("Comentários encontrados para exclusão:", comments);
       await Comment.deleteMany({ entityId: req.params.id });
 
       // Excluindo o blog
