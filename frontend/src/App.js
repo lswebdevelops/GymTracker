@@ -7,43 +7,65 @@ import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetProfileQuery } from './slices/usersApiSlice';
-import { setCredentials } from './slices/authSlice';
+import { setCredentials, logout } from './slices/authSlice'; // Importa a ação logout
 import Loader from './components/Loader';
 
 const App = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
 
-  // State to track if the profile has been successfully fetched and loaded
+  // Estado para controlar se o perfil foi carregado com sucesso
   const [profileLoaded, setProfileLoaded] = useState(false);
 
-  // Determine if the getProfile query should be skipped.
-  // It should run if there's userInfo in localStorage (indicating a logged-in user)
-  // but the Redux userInfo state hasn't been fully hydrated with the profile data yet.
-  const shouldSkipProfileQuery = !localStorage.getItem('userInfo'); // Skip if no userInfo in localStorage
+  // Determina se a consulta do perfil deve ser ignorada.
+  // Ela deve ser executada se houver userInfo no localStorage (indicando um usuário logado)
+  // mas o estado userInfo do Redux ainda não foi totalmente hidratado com os dados do perfil.
+  const shouldSkipProfileQuery = !localStorage.getItem('userInfo'); // Ignora se não houver userInfo no localStorage
 
   const { data: profileData, isLoading: isLoadingProfile, isSuccess: isProfileSuccess, isError: isProfileError } = useGetProfileQuery(undefined, {
     skip: shouldSkipProfileQuery,
   });
 
   useEffect(() => {
-    // This effect runs when the query for profile data changes state
-    if (isProfileSuccess && profileData) {
-      // If profile data is successfully fetched, update Redux state
-      dispatch(setCredentials(profileData));
-      setProfileLoaded(true); // Mark profile as loaded
-    } else if (isProfileError) {
-      console.error("Failed to fetch user profile on app load:", profileData);
-      setProfileLoaded(true); // Still mark as loaded to avoid infinite loader, but handle error
-      // You might want to dispatch a logout action here if the token is invalid
-    } else if (!isLoadingProfile && shouldSkipProfileQuery) {
-      // If not loading, and we skipped the query (meaning no user info in localStorage),
-      // we can consider the profile "loaded" for an unauthenticated user.
-      setProfileLoaded(true);
-    }
-  }, [isProfileSuccess, profileData, isProfileError, isLoadingProfile, shouldSkipProfileQuery, dispatch]);
+    console.log('App useEffect triggered.');
+    console.log('userInfo (redux):', userInfo);
+    console.log('localStorage userInfo:', localStorage.getItem('userInfo'));
+    console.log('shouldSkipProfileQuery:', shouldSkipProfileQuery);
+    console.log('isLoadingProfile:', isLoadingProfile);
+    console.log('isProfileSuccess:', isProfileSuccess);
+    console.log('isProfileError:', isProfileError);
+    console.log('profileLoaded (current):', profileLoaded);
 
-  // Show loader if profile is not yet loaded
+
+    // Cenário 1: Perfil buscado com sucesso (usuário estava logado e token válido)
+    if (isProfileSuccess && profileData) {
+      console.log('Cenário 1: Perfil com sucesso.');
+      dispatch(setCredentials(profileData));
+      setProfileLoaded(true); // Marca o perfil como carregado
+    }
+    // Cenário 2: Erro ao buscar o perfil (usuário estava logado, mas token inválido/expirado, ou erro de rede)
+    else if (isProfileError) {
+      console.error("Falha ao buscar o perfil do usuário na inicialização do aplicativo:", profileData);
+      dispatch(logout()); // Despacha a ação de logout para limpar as informações do usuário
+      setProfileLoaded(true); // Marca como carregado para parar o loader e permitir que o aplicativo renderize
+    }
+    // Cenário 3: Consulta foi ignorada (nenhuma informação de usuário no localStorage)
+    // ou a consulta terminou de carregar (sem erro/sucesso).
+    // Isso garante que o loader desapareça rapidamente se nenhuma autenticação for esperada.
+    else if (!isLoadingProfile && shouldSkipProfileQuery) {
+        console.log('Cenário 3: Consulta de perfil finalizada ou ignorada, sem sessão de usuário ativa.');
+        setProfileLoaded(true);
+    }
+    // Cenário 4 (Fallback): Se não estiver carregando, não houver userInfo no Redux e profileLoaded ainda for falso.
+    // Isso lida com o carregamento inicial quando não há usuário no localStorage ou Redux.
+    else if (!isLoadingProfile && !userInfo && !profileLoaded) {
+        console.log('Cenário 4: Fallback - Não está carregando, sem usuário no Redux, e perfil ainda não carregado.');
+        setProfileLoaded(true);
+    }
+
+  }, [isProfileSuccess, profileData, isProfileError, isLoadingProfile, shouldSkipProfileQuery, dispatch, userInfo, profileLoaded]); // Adicionado userInfo e profileLoaded às dependências
+
+  // Mostra o loader apenas se o perfil ainda não foi carregado
   if (!profileLoaded) {
     return <Loader />;
   }
@@ -53,7 +75,7 @@ const App = () => {
       <Header />
       <main className="py-3">
         <Container>
-          <Outlet /> {/* Render Outlet only after profile is loaded */}
+          <Outlet /> {/* Renderiza o Outlet apenas após o perfil ser carregado */}
         </Container>
       </main>
       <Footer />

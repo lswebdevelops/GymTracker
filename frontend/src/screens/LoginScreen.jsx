@@ -53,7 +53,6 @@ const LoginScreen = () => {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
         <Form.Group controlId="password" className="my-3">
           <Form.Label>Senha</Form.Label>
           <Form.Control
@@ -63,14 +62,14 @@ const LoginScreen = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
         <Button
           type="submit"
           variant="primary"
           className="mt-2"
           disabled={isLoading} // Desabilita o botão enquanto está carregando
         >
-          {isLoading ? "Carregando..." : "Entrar"} {/* Texto dinâmico no botão */}
+          {isLoading ? "Carregando..." : "Entrar"}{" "}
+          {/* Texto dinâmico no botão */}
         </Button>
         {isLoading && <Loader />} {/* Exibe loader enquanto está carregando */}
       </Form>
@@ -83,6 +82,9 @@ const LoginScreen = () => {
           </Link>{" "}
           para receber e-mails sobre os nossos últimos lançamentos.
         </Col>
+        <div className="mt-3">
+          <Link to="/forgot-password">Esqueceu sua senha?</Link>
+        </div>
       </Row>
     </FormContainer>
   );
